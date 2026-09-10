@@ -59,6 +59,11 @@ const statusColors = {
   completed: "bg-[#D1FAE5] text-[#065F46]",
 };
 
+const formatDate = (value: string) => {
+  const [year, month, day] = value.split("-");
+  return `${month}/${day}/${year}`;
+};
+
 const CustomerBookings = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
@@ -89,30 +94,38 @@ const CustomerBookings = () => {
               Date Range
             </label>
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-              <div className="relative flex-1 min-w-0">
+              <div className="relative flex h-11 flex-1 min-w-0 cursor-pointer items-center rounded-lg border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
                 <CalendarDays
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-[#989898] pointer-events-none"
                 />
-                <Input
+                <input
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-11 pl-9 border-[#D3D3D3] rounded-lg text-sm text-center text-[#242424] focus-visible:ring-[#083F3C] w-full"
+                  aria-label="Start date"
+                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0 focus:outline-none"
                 />
+                <span className="pointer-events-none w-full text-center text-sm text-[#242424]">
+                  {dateFrom ? formatDate(dateFrom) : "mm/dd/yyyy"}
+                </span>
               </div>
               <span className="hidden sm:block text-[#989898] text-sm px-1">to</span>
-              <div className="relative flex-1 min-w-0">
+              <div className="relative flex h-11 flex-1 min-w-0 cursor-pointer items-center rounded-lg border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
                 <CalendarDays
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-[#989898] pointer-events-none"
                 />
-                <Input
+                <input
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="h-11 pl-9 border-[#D3D3D3] rounded-lg text-sm text-center text-[#242424] focus-visible:ring-[#083F3C] w-full"
+                  aria-label="End date"
+                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0 focus:outline-none"
                 />
+                <span className="pointer-events-none w-full text-center text-sm text-[#242424]">
+                  {dateTo ? formatDate(dateTo) : "mm/dd/yyyy"}
+                </span>
               </div>
             </div>
           </div>
