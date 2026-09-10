@@ -93,15 +93,18 @@ const EngineerDashboard = () => {
                   </span>
                   <span>Region: {job.region}</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <Link to={`/engineer/job-details/${job.id}`}>
-                    <Button className="h-10 px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
+                <div className="flex flex-col sm:flex-row gap-2 justify-center sm:justify-start">
+                  <Link
+                    to={`/engineer/job-details/${job.id}`}
+                    className="sm:flex-1"
+                  >
+                    <Button className="h-10 w-full sm:w-auto bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
                       View Job Details
                     </Button>
                   </Link>
                   <Button
                     variant="outline"
-                    className="h-10 px-4 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-sm font-semibold"
+                    className="h-10 w-full sm:w-auto border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-sm font-semibold"
                   >
                     <Navigation size={15} className="mr-1.5" />
                     Start Navigation
