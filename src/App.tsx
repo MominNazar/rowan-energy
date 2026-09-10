@@ -13,6 +13,13 @@ import CustomerReports from "./pages/customer/CustomerReports";
 import CustomerBook from "./pages/customer/CustomerBook";
 import CustomerProfile from "./pages/customer/CustomerProfile";
 import EngineerLogin from "./pages/engineer/EngineerLogin";
+import EngineerDashboard from "./pages/engineer/EngineerDashboard";
+import EngineerSchedule from "./pages/engineer/EngineerSchedule";
+import EngineerRoutePlanner from "./pages/engineer/EngineerRoutePlanner";
+import EngineerJobDetails from "./pages/engineer/EngineerJobDetails";
+import EngineerChecklist from "./pages/engineer/EngineerChecklist";
+import EngineerUploadSurvey from "./pages/engineer/EngineerUploadSurvey";
+import EngineerAvailability from "./pages/engineer/EngineerAvailability";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +39,16 @@ const App = () => (
           <Route path="/customer/book" element={<CustomerBook />} />
           <Route path="/customer/profile" element={<CustomerProfile />} />
           <Route path="/engineer/login" element={<EngineerLogin />} />
+          <Route path="/engineer/dashboard" element={<EngineerDashboard />} />
+          <Route path="/engineer/schedule" element={<EngineerSchedule />} />
+          <Route path="/engineer/route-planner" element={<EngineerRoutePlanner />} />
+          <Route path="/engineer/job-details" element={<EngineerJobDetails />} />
+          <Route path="/engineer/job-details/:id" element={<EngineerJobDetails />} />
+          <Route path="/engineer/checklist" element={<EngineerChecklist />} />
+          <Route path="/engineer/checklist/:id" element={<EngineerChecklist />} />
+          <Route path="/engineer/upload" element={<EngineerUploadSurvey />} />
+          <Route path="/engineer/upload/:id" element={<EngineerUploadSurvey />} />
+          <Route path="/engineer/availability" element={<EngineerAvailability />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
