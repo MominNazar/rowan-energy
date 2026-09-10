@@ -94,7 +94,7 @@ const CustomerProfile = () => {
           </div>
         </div>
 
-        <div className="flex justify-end mt-6">
+        <div className="flex justify-center sm:justify-end mt-6">
           <Button className="h-10 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
             Save Changes
           </Button>
@@ -156,7 +156,7 @@ const CustomerProfile = () => {
               />
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-center sm:justify-end">
             <Button className="h-10 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
               <Lock size={15} className="mr-2" />
               Update Password
