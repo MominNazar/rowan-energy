@@ -7,6 +7,11 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CustomerLogin from "./pages/customer/CustomerLogin";
 import CustomerDashboard from "./pages/customer/CustomerDashboard";
+import CustomerBookings from "./pages/customer/CustomerBookings";
+import BookingDetails from "./pages/customer/BookingDetails";
+import CustomerReports from "./pages/customer/CustomerReports";
+import CustomerBook from "./pages/customer/CustomerBook";
+import CustomerProfile from "./pages/customer/CustomerProfile";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +25,11 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/customer/login" element={<CustomerLogin />} />
           <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+          <Route path="/customer/bookings" element={<CustomerBookings />} />
+          <Route path="/customer/bookings/:id" element={<BookingDetails />} />
+          <Route path="/customer/reports" element={<CustomerReports />} />
+          <Route path="/customer/book" element={<CustomerBook />} />
+          <Route path="/customer/profile" element={<CustomerProfile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
