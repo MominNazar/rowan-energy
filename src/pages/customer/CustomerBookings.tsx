@@ -64,6 +64,7 @@ const CustomerBookings = () => {
   const [dateTo, setDateTo] = useState("");
   const [status, setStatus] = useState("all");
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredBookings = bookings.filter((booking) => {
     const matchesStatus =
@@ -273,41 +274,44 @@ const CustomerBookings = () => {
 
       {/* Pagination */}
       {filteredBookings.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-5">
-          <p className="text-xs sm:text-sm text-[#989898]">
-            Showing 1 to {filteredBookings.length} of 12 results
-          </p>
-          <div className="flex items-center gap-1.5">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-9 px-3 border-[#D3D3D3] text-[#505050] hover:bg-[#EAEAEA] rounded-lg text-sm"
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-5">
+        <p className="text-xs sm:text-sm text-[#989898]">
+          Showing 1 to {filteredBookings.length} of 12 results
+        </p>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className="h-9 px-4 border border-[#D3D3D3] bg-white text-[#242424] text-sm font-medium rounded-lg hover:bg-[#F5F5F5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          {[1, 2, 3].map((page) => (
+            <button
+              key={page}
+              type="button"
+              onClick={() => setCurrentPage(page)}
+              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors border ${
+                page === currentPage
+                  ? "bg-[#083F3C] text-white border-[#083F3C]"
+                  : "bg-white text-[#242424] border-[#D3D3D3] hover:bg-[#F5F5F5]"
+              }`}
             >
-              Previous
-            </Button>
-            {[1, 2, 3].map((page) => (
-              <button
-                key={page}
-                type="button"
-                className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                  page === 1
-                    ? "bg-[#083F3C] text-white"
-                    : "text-[#505050] hover:bg-[#EAEAEA]"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-9 px-3 border-[#D3D3D3] text-[#505050] hover:bg-[#EAEAEA] rounded-lg text-sm"
-            >
-              Next
-            </Button>
-          </div>
+              {page}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setCurrentPage((prev) => Math.min(3, prev + 1))}
+            disabled={currentPage === 3}
+            className="h-9 px-4 border border-[#D3D3D3] bg-white text-[#242424] text-sm font-medium rounded-lg hover:bg-[#F5F5F5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
         </div>
-      )}
+      </div>
+    )}
     </SurveyProLayout>
   );
 };
