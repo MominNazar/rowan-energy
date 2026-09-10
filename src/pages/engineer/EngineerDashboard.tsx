@@ -52,32 +52,8 @@ const quickActions = [
 
 const EngineerDashboard = () => {
   return (
-    <EngineerLayout title="My Weekly Schedule" subtitle="January 20 - January 26, 2025">
+    <EngineerLayout title="Good morning, Alex" subtitle="You have 2 jobs scheduled today in North England">
       <div className="space-y-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-[28px] font-semibold text-[#242424]">
-              Good morning, Alex
-            </h1>
-            <p className="text-sm text-[#505050] mt-0.5">
-              You have 2 jobs scheduled today in North England
-            </p>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              type="button"
-              className="relative w-10 h-10 rounded-full border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors"
-              aria-label="View notifications"
-            >
-              <Bell size={18} />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#37E49E] ring-2 ring-white" />
-            </button>
-            <div className="w-10 h-10 rounded-full bg-[#0A3D3A] text-white font-semibold text-sm flex items-center justify-center">
-              AJ
-            </div>
-          </div>
-        </div>
-
         <div className="bg-[#FEF3C7] border border-[#F59E0B] rounded-lg px-4 sm:px-5 py-3 flex items-start gap-3">
           <FileText size={18} className="text-[#B45309] shrink-0 mt-0.5" />
           <p className="text-sm text-[#92400E]">
