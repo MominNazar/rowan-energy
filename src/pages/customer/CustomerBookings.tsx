@@ -95,10 +95,6 @@ const CustomerBookings = () => {
             </label>
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
               <div className="relative flex h-14 flex-1 min-w-0 cursor-pointer items-center rounded-xl border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
-                <CalendarDays
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#989898] pointer-events-none"
-                />
                 <input
                   type="date"
                   value={dateFrom}
@@ -112,10 +108,6 @@ const CustomerBookings = () => {
               </div>
               <span className="hidden sm:block text-[#989898] text-sm px-1">to</span>
               <div className="relative flex h-14 flex-1 min-w-0 cursor-pointer items-center rounded-xl border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
-                <CalendarDays
-                  size={16}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#989898] pointer-events-none"
-                />
                 <input
                   type="date"
                   value={dateTo}
