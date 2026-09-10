@@ -98,7 +98,7 @@ const CustomerBookings = () => {
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-11 pl-9 border-[#D3D3D3] rounded-lg text-sm text-[#242424] focus-visible:ring-[#083F3C] w-full"
+                  className="h-11 pl-9 border-[#D3D3D3] rounded-lg text-sm text-center text-[#242424] focus-visible:ring-[#083F3C] w-full"
                 />
               </div>
               <span className="hidden sm:block text-[#989898] text-sm px-1">to</span>
@@ -111,7 +111,7 @@ const CustomerBookings = () => {
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="h-11 pl-9 border-[#D3D3D3] rounded-lg text-sm text-[#242424] focus-visible:ring-[#083F3C] w-full"
+                  className="h-11 pl-9 border-[#D3D3D3] rounded-lg text-sm text-center text-[#242424] focus-visible:ring-[#083F3C] w-full"
                 />
               </div>
             </div>
