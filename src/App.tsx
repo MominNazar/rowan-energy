@@ -20,6 +20,15 @@ import EngineerJobDetails from "./pages/engineer/EngineerJobDetails";
 import EngineerChecklist from "./pages/engineer/EngineerChecklist";
 import EngineerUploadSurvey from "./pages/engineer/EngineerUploadSurvey";
 import EngineerAvailability from "./pages/engineer/EngineerAvailability";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminJobs from "./pages/admin/AdminJobs";
+import AdminJobDetails from "./pages/admin/AdminJobDetails";
+import AdminCalendar from "./pages/admin/AdminCalendar";
+import AdminRoutePlanner from "./pages/admin/AdminRoutePlanner";
+import AdminEngineers from "./pages/admin/AdminEngineers";
+import AdminReports from "./pages/admin/AdminReports";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +58,15 @@ const App = () => (
           <Route path="/engineer/upload" element={<EngineerUploadSurvey />} />
           <Route path="/engineer/upload/:id" element={<EngineerUploadSurvey />} />
           <Route path="/engineer/availability" element={<EngineerAvailability />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/leads" element={<AdminLeads />} />
+          <Route path="/admin/jobs" element={<AdminJobs />} />
+          <Route path="/admin/jobs/:id" element={<AdminJobDetails />} />
+          <Route path="/admin/calendar" element={<AdminCalendar />} />
+          <Route path="/admin/route-planner" element={<AdminRoutePlanner />} />
+          <Route path="/admin/engineers" element={<AdminEngineers />} />
+          <Route path="/admin/reports" element={<AdminReports />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
