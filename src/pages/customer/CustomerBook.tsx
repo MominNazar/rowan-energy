@@ -363,19 +363,19 @@ const CustomerBook = () => {
             {/* Form Actions */}
             <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4 border-t border-[#D3D3D3]">
               <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowForm(false)}
-                className="h-11 px-6 border-[#D3D3D3] text-[#505050] hover:bg-[#EAEAEA] rounded-lg text-sm font-semibold"
-              >
-                Cancel
-              </Button>
-              <Button
                 type="submit"
-                className="h-11 px-6 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
+                className="h-11 w-full sm:w-auto px-6 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
               >
                 <Calendar size={15} className="mr-2" />
                 Submit Booking Request
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowForm(false)}
+                className="h-11 w-full sm:w-auto px-6 border-[#D3D3D3] text-[#505050] hover:bg-[#EAEAEA] rounded-lg text-sm font-semibold"
+              >
+                Cancel
               </Button>
             </div>
           </form>
