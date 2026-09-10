@@ -290,10 +290,13 @@ const Index = () => {
             Our streamlined process delivers comprehensive drone surveys in just
             four simple steps
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 items-start">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-stretch gap-6 lg:gap-2">
             {/* Step 1: Inquire */}
-            <div className="relative">
-              <div className="bg-white rounded-xl border border-border p-6 lg:p-8 text-center">
+            <div className="flex items-center w-full lg:w-auto flex-1">
+              <div className="relative flex-1 bg-white rounded-xl border border-border p-6 lg:p-8 text-center h-full">
+                <span className="absolute -top-3 right-5 w-7 h-7 rounded-full bg-primary text-white text-xs font-semibold flex items-center justify-center shadow-sm">
+                  1
+                </span>
                 <div className="flex justify-center mb-5">
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
                     <Mail size={22} className="text-white" />
@@ -307,7 +310,7 @@ const Index = () => {
                   your specific requirements
                 </p>
               </div>
-              <div className="hidden lg:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-[#989898]">
+              <div className="hidden lg:flex items-center justify-center w-10 shrink-0 text-[#989898]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
@@ -316,8 +319,11 @@ const Index = () => {
             </div>
 
             {/* Step 2: Book */}
-            <div className="relative">
-              <div className="bg-white rounded-xl border border-border p-6 lg:p-8 text-center">
+            <div className="flex items-center w-full lg:w-auto flex-1">
+              <div className="relative flex-1 bg-white rounded-xl border border-border p-6 lg:p-8 text-center h-full">
+                <span className="absolute -top-3 right-5 w-7 h-7 rounded-full bg-primary text-white text-xs font-semibold flex items-center justify-center shadow-sm">
+                  2
+                </span>
                 <div className="flex justify-center mb-5">
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -336,7 +342,7 @@ const Index = () => {
                   the optimal conditions for your site
                 </p>
               </div>
-              <div className="hidden lg:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-[#989898]">
+              <div className="hidden lg:flex items-center justify-center w-10 shrink-0 text-[#989898]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
@@ -345,8 +351,11 @@ const Index = () => {
             </div>
 
             {/* Step 3: Survey */}
-            <div className="relative">
-              <div className="bg-white rounded-xl border border-border p-6 lg:p-8 text-center">
+            <div className="flex items-center w-full lg:w-auto flex-1">
+              <div className="relative flex-1 bg-white rounded-xl border border-border p-6 lg:p-8 text-center h-full">
+                <span className="absolute -top-3 right-5 w-7 h-7 rounded-full bg-primary text-white text-xs font-semibold flex items-center justify-center shadow-sm">
+                  3
+                </span>
                 <div className="flex justify-center mb-5">
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
                     <Search size={22} className="text-white" />
@@ -360,7 +369,7 @@ const Index = () => {
                   inspection of your renewable energy site
                 </p>
               </div>
-              <div className="hidden lg:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-[#989898]">
+              <div className="hidden lg:flex items-center justify-center w-10 shrink-0 text-[#989898]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
@@ -369,8 +378,11 @@ const Index = () => {
             </div>
 
             {/* Step 4: Get Report */}
-            <div className="relative">
-              <div className="bg-white rounded-xl border border-border p-6 lg:p-8 text-center">
+            <div className="flex items-center w-full lg:w-auto flex-1">
+              <div className="relative flex-1 bg-white rounded-xl border border-border p-6 lg:p-8 text-center h-full">
+                <span className="absolute -top-3 right-5 w-7 h-7 rounded-full bg-primary text-white text-xs font-semibold flex items-center justify-center shadow-sm">
+                  4
+                </span>
                 <div className="flex justify-center mb-5">
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
                     <FileText size={22} className="text-white" />
@@ -503,6 +515,7 @@ const Index = () => {
                 <li>
                   <Link
                     to="/"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-sm text-white/80 hover:text-white transition-colors"
                   >
                     Home
@@ -511,6 +524,7 @@ const Index = () => {
                 <li>
                   <Link
                     to="/#services"
+                    onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}
                     className="text-sm text-white/80 hover:text-white transition-colors"
                   >
                     Services
@@ -519,6 +533,7 @@ const Index = () => {
                 <li>
                   <Link
                     to="/#how-it-works"
+                    onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
                     className="text-sm text-white/80 hover:text-white transition-colors"
                   >
                     How It Works
@@ -527,6 +542,7 @@ const Index = () => {
                 <li>
                   <Link
                     to="/#contact"
+                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                     className="text-sm text-white/80 hover:text-white transition-colors"
                   >
                     Contact
