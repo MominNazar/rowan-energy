@@ -54,68 +54,68 @@ const CustomerBook = () => {
       {/* Booking Options */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 mb-6">
         {/* Call Us */}
-        <div className="bg-white rounded-xl border border-[#D3D3D3] p-5 sm:p-6">
+        <div className="flex flex-col bg-white rounded-xl border border-[#D3D3D3] p-5 sm:p-6">
           <div className="w-10 h-10 rounded-lg bg-[#EAEAEA] flex items-center justify-center mb-4">
             <Phone size={20} className="text-[#083F3C]" />
           </div>
           <h3 className="font-display text-base font-semibold text-[#242424] mb-1">
             Call Us
           </h3>
-          <p className="text-sm text-[#505050] mb-4 leading-relaxed">
+          <p className="mb-4 min-h-[72px] text-sm text-[#505050] leading-relaxed">
             Prefer to speak directly? Call our AI booking agent for instant assistance.
           </p>
-          <div className="bg-[#EAEAEA] rounded-lg p-3 mb-4">
+          <div className="h-[78px] bg-[#EAEAEA] rounded-lg p-3 mb-4">
             <p className="font-semibold text-[#242424] text-sm">+44 123 456 7890</p>
             <p className="text-xs text-[#989898] mt-0.5">Available 24/7 for instant booking</p>
           </div>
-          <Button className="w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
+          <Button className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
             <Phone size={15} className="mr-2" />
             Call Now
           </Button>
         </div>
 
         {/* Chat Assistant */}
-        <div className="bg-white rounded-xl border border-[#D3D3D3] p-5 sm:p-6">
+        <div className="flex flex-col bg-white rounded-xl border border-[#D3D3D3] p-5 sm:p-6">
           <div className="w-10 h-10 rounded-lg bg-[#EAEAEA] flex items-center justify-center mb-4">
             <MessageSquare size={20} className="text-[#083F3C]" />
           </div>
           <h3 className="font-display text-base font-semibold text-[#242424] mb-1">
             Chat Assistant
           </h3>
-          <p className="text-sm text-[#505050] mb-4 leading-relaxed">
+          <p className="mb-4 min-h-[72px] text-sm text-[#505050] leading-relaxed">
             Use our intelligent chatbot to book your survey in under a minute with guided questions.
           </p>
-          <div className="bg-[#EAEAEA] rounded-lg p-3 mb-4">
+          <div className="h-[78px] bg-[#EAEAEA] rounded-lg p-3 mb-4">
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full bg-[#37E49E]" />
               <span className="font-semibold text-[#242424] text-sm">Online now</span>
             </div>
             <p className="text-xs text-[#989898]">Quick & interactive booking</p>
           </div>
-          <Button className="w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
+          <Button className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
             <MessageSquare size={15} className="mr-2" />
             Start Chat
           </Button>
         </div>
 
         {/* Manual Form */}
-        <div className="bg-white rounded-xl border border-[#D3D3D3] p-5 sm:p-6">
+        <div className="flex flex-col bg-white rounded-xl border border-[#D3D3D3] p-5 sm:p-6">
           <div className="w-10 h-10 rounded-lg bg-[#EAEAEA] flex items-center justify-center mb-4">
             <PenLine size={20} className="text-[#083F3C]" />
           </div>
           <h3 className="font-display text-base font-semibold text-[#242424] mb-1">
             Manual Form
           </h3>
-          <p className="text-sm text-[#505050] mb-4 leading-relaxed">
+          <p className="mb-4 min-h-[72px] text-sm text-[#505050] leading-relaxed">
             Fill in detailed survey requirements yourself with our comprehensive booking form.
           </p>
-          <div className="bg-[#EAEAEA] rounded-lg p-3 mb-4">
+          <div className="h-[78px] bg-[#EAEAEA] rounded-lg p-3 mb-4">
             <p className="font-semibold text-[#242424] text-sm">Complete control</p>
             <p className="text-xs text-[#989898] mt-0.5">Detailed specifications & notes</p>
           </div>
           <Button
             onClick={() => setShowForm(true)}
-            className="w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
+            className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
           >
             <PenLine size={15} className="mr-2" />
             Fill Form

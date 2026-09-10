@@ -89,12 +89,12 @@ const CustomerBookings = () => {
       <div className="bg-white rounded-xl border border-[#D3D3D3] p-4 sm:p-5 lg:p-6 mb-6">
         <div className="flex flex-col lg:flex-row lg:items-end gap-4">
           {/* Date Range */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 xl:w-[480px]">
             <label className="block text-xs sm:text-sm font-semibold text-[#242424] mb-2">
               Date Range
             </label>
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-              <div className="relative flex h-11 flex-1 min-w-0 cursor-pointer items-center rounded-lg border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
+              <div className="relative flex h-14 flex-1 min-w-0 cursor-pointer items-center rounded-xl border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
                 <CalendarDays
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-[#989898] pointer-events-none"
@@ -106,12 +106,12 @@ const CustomerBookings = () => {
                   aria-label="Start date"
                   className="absolute inset-0 h-full w-full cursor-pointer opacity-0 focus:outline-none"
                 />
-                <span className="pointer-events-none w-full text-center text-sm text-[#242424]">
+                <span className="pointer-events-none w-full text-center text-base text-[#242424]">
                   {dateFrom ? formatDate(dateFrom) : "mm/dd/yyyy"}
                 </span>
               </div>
               <span className="hidden sm:block text-[#989898] text-sm px-1">to</span>
-              <div className="relative flex h-11 flex-1 min-w-0 cursor-pointer items-center rounded-lg border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
+              <div className="relative flex h-14 flex-1 min-w-0 cursor-pointer items-center rounded-xl border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
                 <CalendarDays
                   size={16}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-[#989898] pointer-events-none"
@@ -123,7 +123,7 @@ const CustomerBookings = () => {
                   aria-label="End date"
                   className="absolute inset-0 h-full w-full cursor-pointer opacity-0 focus:outline-none"
                 />
-                <span className="pointer-events-none w-full text-center text-sm text-[#242424]">
+                <span className="pointer-events-none w-full text-center text-base text-[#242424]">
                   {dateTo ? formatDate(dateTo) : "mm/dd/yyyy"}
                 </span>
               </div>
