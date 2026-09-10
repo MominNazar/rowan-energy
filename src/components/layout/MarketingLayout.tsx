@@ -60,17 +60,21 @@ export const MarketingLayout = ({ children }: MarketingLayoutProps) => {
 
           {/* Desktop CTA buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-white rounded-md px-5 h-10 text-sm font-semibold"
-            >
-              Login
-            </Button>
-            <Button
-              className="bg-primary hover:bg-primary/90 text-white rounded-md px-5 h-10 text-sm font-semibold"
-            >
-              Instant Quote
-            </Button>
+            <Link to="/customer/login">
+              <Button
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-white rounded-md px-5 h-10 text-sm font-semibold"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link to="/customer/book">
+              <Button
+                className="bg-primary hover:bg-primary/90 text-white rounded-md px-5 h-10 text-sm font-semibold"
+              >
+                Instant Quote
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -112,15 +116,21 @@ export const MarketingLayout = ({ children }: MarketingLayoutProps) => {
               Contact
             </NavLink>
             <div className="flex gap-3 pt-2 border-t border-border">
-              <Button
-                variant="outline"
-                className="flex-1 border-primary text-primary hover:bg-primary hover:text-white rounded-md h-10 text-sm font-semibold"
-              >
-                Login
-              </Button>
-              <Button className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-md h-10 text-sm font-semibold">
-                Instant Quote
-              </Button>
+              <Link to="/customer/login" className="flex-1">
+                <Button
+                  variant="outline"
+                  className="border-primary text-primary hover:bg-primary hover:text-white rounded-md h-10 text-sm font-semibold"
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link to="/customer/book" className="flex-1">
+                <Button
+                  className="bg-primary hover:bg-primary/90 text-white rounded-md h-10 text-sm font-semibold"
+                >
+                  Instant Quote
+                </Button>
+              </Link>
             </div>
           </div>
         )}
