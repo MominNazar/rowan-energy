@@ -67,46 +67,46 @@ const EngineerRoutePlanner = () => {
               Today - January 22, 2025
             </Button>
             <Button
-              variant="outline"
-              size="icon"
-              className="h-9 w-9 border-[#E0E0E0] bg-white text-[#505050] hover:bg-[#F5F5F5] shrink-0"
-              aria-label="Next day"
-            >
-              <ChevronRight size={16} />
-            </Button>
-            <Select defaultValue="daily">
-              <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-8 w-auto">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
-                <SelectItem value="daily">Daily View</SelectItem>
-                <SelectItem value="weekly">Weekly View</SelectItem>
-              </SelectContent>
-            </Select>
+                          variant="outline"
+                          size="icon"
+                          className="h-9 w-9 border-[#E0E0E0] bg-white text-[#505050] hover:bg-[#F5F5F5] shrink-0"
+                          aria-label="Next day"
+                        >
+                          <ChevronRight size={16} />
+                        </Button>
+                        <Select defaultValue="daily">
+                          <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-6 w-auto">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
+                              <SelectItem value="daily">Daily View</SelectItem>
+                              <SelectItem value="weekly">Weekly View</SelectItem>
+                            </SelectContent>
+                        </Select>
           </div>
           {/* Filters */}
           <div className="flex flex-wrap gap-2">
-            <Select defaultValue="all-regions">
-              <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-8 w-auto">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
-                <SelectItem value="all-regions">All Regions</SelectItem>
-                <SelectItem value="north-england">North England</SelectItem>
-                <SelectItem value="south-england">South England</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select defaultValue="all-status">
-              <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-8 w-auto">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
-                <SelectItem value="all-status">All Status</SelectItem>
-                <SelectItem value="scheduled">Scheduled</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+                      <Select defaultValue="all-regions">
+                        <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-6 w-auto">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
+                            <SelectItem value="all-regions">All Regions</SelectItem>
+                            <SelectItem value="north-england">North England</SelectItem>
+                            <SelectItem value="south-england">South England</SelectItem>
+                          </SelectContent>
+                      </Select>
+                      <Select defaultValue="all-status">
+                        <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-6 w-auto">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
+                            <SelectItem value="all-status">All Status</SelectItem>
+                            <SelectItem value="scheduled">Scheduled</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                          </SelectContent>
+                      </Select>
+                    </div>
         </div>
 
         {/* Map + Route List */}
