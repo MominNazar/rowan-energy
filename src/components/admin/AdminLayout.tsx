@@ -17,9 +17,10 @@ import {
 
 interface AdminLayoutProps {
   children: ReactNode;
-  title: string;
+  title?: string;
   subtitle?: string;
   showNotification?: boolean;
+  hideUser?: boolean;
 }
 
 const navItems = [
@@ -35,9 +36,10 @@ const navItems = [
 
 export const AdminLayout = ({
   children,
-  title,
+  title = "",
   subtitle,
   showNotification = false,
+  hideUser = false,
 }: AdminLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
@@ -152,29 +154,31 @@ export const AdminLayout = ({
           </div>
 
           <div className="flex items-center gap-3">
-            {showNotification && (
-              <button
-                type="button"
-                className="relative w-10 h-10 rounded-lg border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors shrink-0"
-                aria-label="View notifications"
-              >
-                <Bell size={18} />
-                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#EF4444] ring-2 ring-white" />
-              </button>
-            )}
-            <button
-              type="button"
-              className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg border border-transparent hover:bg-[#F5F5F5] transition-colors shrink-0"
-            >
-              <div className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center">
-                D
-              </div>
-              <span className="hidden sm:inline text-sm font-medium text-[#242424]">
-                David
-              </span>
-              <ChevronDown size={14} className="hidden sm:block text-[#989898]" />
-            </button>
-          </div>
+                      {showNotification && !hideUser && (
+                        <button
+                          type="button"
+                          className="relative w-10 h-10 rounded-lg border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors shrink-0"
+                          aria-label="View notifications"
+                        >
+                          <Bell size={18} />
+                          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#EF4444] ring-2 ring-white" />
+                        </button>
+                      )}
+                      {!hideUser && (
+                        <button
+                          type="button"
+                          className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg border border-transparent hover:bg-[#F5F5F5] transition-colors shrink-0"
+                        >
+                          <div className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center">
+                            D
+                          </div>
+                          <span className="hidden sm:inline text-sm font-medium text-[#242424]">
+                            David
+                          </span>
+                          <ChevronDown size={14} className="hidden sm:block text-[#989898]" />
+                        </button>
+                      )}
+                    </div>
         </header>
 
         <main className="flex-1 p-5 sm:p-6 overflow-auto">
