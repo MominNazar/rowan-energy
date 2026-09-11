@@ -21,6 +21,7 @@ export interface JobDetail {
   specialRequirements: string;
   upload: string;
   status: string;
+  time: string;
   files: { name: string; status: "Missing" | "Pending" | "Uploaded" }[];
 }
 
@@ -48,6 +49,7 @@ export const jobs: JobDetail[] = [
     specialRequirements: "Standard inspection protocol",
     upload: "Pending",
     status: "Scheduled",
+    time: "Jul 25 - 10:00 AM to 11:30 AM",
     files: [
       { name: "Thermal Imagery", status: "Missing" },
       { name: "RGB Photos", status: "Missing" },
