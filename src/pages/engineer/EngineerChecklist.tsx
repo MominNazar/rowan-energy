@@ -246,81 +246,82 @@ const EngineerChecklist = () => {
           </div>
 
           {/* Required Uploads */}
-          <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-[#EAEAEA] flex items-center justify-center">
-                <Upload size={18} className="text-[#0A3D3A]" />
-              </div>
-              <h2 className="font-display text-base font-semibold text-[#242424]">Required Uploads</h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {([
-                ["Flight Plan", "PDF/Google Maps", FileText],
-                ["Weather Screenshots", "PNG/JPG Files", FileUp],
-                ["Airspace Clearance/NOTAM", "Screenshot Files", Map],
-                ["Permits", "PDF/Other Files", FileText],
-              ] as const).map(([label, desc, Icon]) => (
-                <button key={label} type="button" className="rounded-xl border-2 border-dashed border-[#D3D3D3] bg-white p-5 flex flex-col items-center justify-center gap-2 hover:border-[#0A3D3A] transition-colors">
-                  <Icon size={22} className="text-[#0A3D3A]" />
-                  <span className="font-medium text-sm text-[#242424]">{label}</span>
-                  <span className="text-[10px] text-[#989898]">{desc}</span>
-                  <span className="text-xs font-medium text-[#0A3D3A]">Browse Files</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* AI Assistant */}
-        <div className="space-y-4">
-          <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-9 h-9 rounded-lg bg-[#E8F6F3] flex items-center justify-center">
-                <Bot size={18} className="text-[#0A3D3A]" />
-              </div>
-              <div>
-                <h2 className="font-display text-base font-semibold text-[#242424]">AI Flight Assistant</h2>
-                <p className="text-xs text-[#989898] mt-0.5">Ask about weather, hazards, airspace, or compliance</p>
-              </div>
-            </div>
-            <Button className="w-full h-10 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold" onClick={() => setAiFilled(true)}>
-              Ask AI
-            </Button>
-            <Button variant="outline" className="w-full h-10 mt-2 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
-              Get AI Help
-            </Button>
-            <div className="mt-5">
-              <p className="text-xs font-medium text-[#242424] mb-2">Upload Shortcuts</p>
-              <div className="space-y-2">
-                <Button variant="outline" className="w-full h-10 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
-                  <FileText size={15} className="mr-2" />
-                  Flight Plan Upload
-                </Button>
-                <Button variant="outline" className="w-full h-10 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
-                  <FileUp size={15} className="mr-2" />
-                  NOTAM Screenshot
-                </Button>
-              </div>
-            </div>
-            <div className="mt-4 bg-[#E8F6F3] rounded-lg p-3 flex gap-2">
-              <Zap size={15} className="text-[#0A3D3A] shrink-0 mt-0.5" />
-              <p className="text-xs text-[#242424] leading-relaxed">Use AI to help you understand your airspace, forecast, or identify site risks</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-        <Button variant="outline" className="h-11 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
-          <FileText size={15} className="mr-2" />
-          Save Checklist &amp; Risk Assessment
-        </Button>
-        <Button className="h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
-          <Check size={15} className="mr-2" />
-          Mark Pre-Survey Complete
-        </Button>
-      </div>
-    </EngineerLayout>
+                    <div>
+                      <div className="flex items-center gap-2.5 mb-4">
+                        <div className="w-9 h-9 rounded-lg bg-[#EAEAEA] flex items-center justify-center">
+                          <Upload size={18} className="text-[#0A3D3A]" />
+                        </div>
+                        <h2 className="font-display text-base font-semibold text-[#242424]">Required Uploads</h2>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {([
+                          ["Flight Plan", "PDF/Google Maps", FileText],
+                          ["Weather Screenshots", "PNG/JPG Files", FileUp],
+                          ["Airspace Clearance/NOTAM", "Screenshot Files", Map],
+                          ["Permits", "PDF/Other Files", FileText],
+                        ] as const).map(([label, desc, Icon]) => (
+                          <button key={label} type="button" className="rounded-xl border-2 border-dashed border-[#D3D3D3] bg-white p-5 flex flex-col items-center justify-center gap-2 hover:border-[#0A3D3A] transition-colors">
+                            <Icon size={22} className="text-[#0A3D3A]" />
+                            <span className="font-medium text-sm text-[#242424]">{label}</span>
+                            <span className="text-[10px] text-[#989898]">{desc}</span>
+                            <span className="text-xs font-medium text-[#0A3D3A]">Browse Files</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+          
+                    {/* Action Buttons */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                      <Button variant="outline" className="h-11 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold w-full">
+                        <FileText size={15} className="mr-2" />
+                        Save Checklist &amp; Risk Assessment
+                      </Button>
+                      <Button className="h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold w-full">
+                        <Check size={15} className="mr-2" />
+                        Mark Pre-Survey Complete
+                      </Button>
+                    </div>
+                  </div>
+          
+                  {/* AI Assistant */}
+                  <div className="space-y-4">
+                    <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
+                      <div className="flex items-center gap-2.5 mb-3">
+                        <div className="w-9 h-9 rounded-lg bg-[#E8F6F3] flex items-center justify-center">
+                          <Bot size={18} className="text-[#0A3D3A]" />
+                        </div>
+                        <div>
+                          <h2 className="font-display text-base font-semibold text-[#242424]">AI Flight Assistant</h2>
+                          <p className="text-xs text-[#989898] mt-0.5">Ask about weather, hazards, airspace, or compliance</p>
+                        </div>
+                      </div>
+                      <Button className="w-full h-10 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold" onClick={() => setAiFilled(true)}>
+                        Ask AI
+                      </Button>
+                      <Button variant="outline" className="w-full h-10 mt-2 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
+                        Get AI Help
+                      </Button>
+                      <div className="mt-5">
+                        <p className="text-xs font-medium text-[#242424] mb-2">Upload Shortcuts</p>
+                        <div className="space-y-2">
+                          <Button variant="outline" className="w-full h-10 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
+                            <FileText size={15} className="mr-2" />
+                            Flight Plan Upload
+                          </Button>
+                          <Button variant="outline" className="w-full h-10 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
+                            <FileUp size={15} className="mr-2" />
+                            NOTAM Screenshot
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="mt-4 bg-[#E8F6F3] rounded-lg p-3 flex gap-2">
+                        <Zap size={15} className="text-[#0A3D3A] shrink-0 mt-0.5" />
+                        <p className="text-xs text-[#242424] leading-relaxed">Use AI to help you understand your airspace, forecast, or identify site risks</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </EngineerLayout>
   );
 };
 
