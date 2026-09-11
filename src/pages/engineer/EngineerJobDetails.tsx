@@ -215,10 +215,12 @@ const EngineerJobDetails = () => {
               <h2 className="font-display text-base font-semibold text-[#242424]">Quick Actions</h2>
             </div>
             <div className="space-y-3">
-              <Button className="w-full h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
-                <Check size={15} className="mr-2" />
-                Begin Pre-Survey Checklist
-              </Button>
+              <Link to="/engineer/checklist" className="w-full">
+                              <Button className="w-full h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
+                                <Check size={15} className="mr-2" />
+                                Begin Pre-Survey Checklist
+                              </Button>
+                            </Link>
               <Button variant="outline" className="w-full h-11 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-sm font-semibold">
                 <Calendar size={15} className="mr-2" />
                 Add to Calendar
