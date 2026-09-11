@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Clock, MapPin, Save, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { EngineerLayout } from "@/components/engineer/EngineerLayout";
 
 const days = [
@@ -132,42 +139,50 @@ const EngineerAvailability = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <label className="block text-sm font-medium text-[#242424] mb-2">
-                Maximum jobs per day
-              </label>
-              <select
-                value={maxJobsInput}
-                onChange={(e) => setMaxJobsInput(e.target.value)}
-                className="w-full h-11 rounded-lg border border-[#D3D3D3] bg-white pl-3 pr-8 text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] cursor-pointer"
-              >
-                <option value="1">1 job per day</option>
-                <option value="2">2 jobs per day</option>
-                <option value="3">3 jobs per day</option>
-                <option value="4">4 jobs per day</option>
-                <option value="5">5 jobs per day</option>
-              </select>
-              <p className="text-xs text-[#989898] mt-1">
-                This helps balance your workload and prevents over-scheduling.
-              </p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-[#242424] mb-2">
-                Notification Method
-              </label>
-              <select
-                value={notificationMethod}
-                onChange={(e) => setNotificationMethod(e.target.value)}
-                className="w-full h-11 rounded-lg border border-[#D3D3D3] bg-white pl-3 pr-8 text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] cursor-pointer"
-              >
-                <option value="both">Both Email &amp; SMS</option>
-                <option value="email">Email Only</option>
-                <option value="sms">SMS Only</option>
-                <option value="none">None</option>
-              </select>
-              <p className="text-xs text-[#989898] mt-1">
-                How you receive new job assignments.
-              </p>
-            </div>
+                          <label className="block text-sm font-medium text-[#242424] mb-2">
+                            Maximum jobs per day
+                          </label>
+                          <Select
+                            value={maxJobsInput}
+                            onValueChange={setMaxJobsInput}
+                          >
+                            <SelectTrigger className="w-full h-11 rounded-lg border border-[#D3D3D3] bg-white pl-3 pr-10 text-sm text-[#242424] focus:ring-2 focus:ring-[#0A3D3A] cursor-pointer">
+                              <SelectValue placeholder="Select max jobs" />
+                            </SelectTrigger>
+                            <SelectContent className="w-[calc(100%-2rem)] max-w-[280px]">
+                              <SelectItem value="1">1 job per day</SelectItem>
+                              <SelectItem value="2">2 jobs per day</SelectItem>
+                              <SelectItem value="3">3 jobs per day</SelectItem>
+                              <SelectItem value="4">4 jobs per day</SelectItem>
+                              <SelectItem value="5">5 jobs per day</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-[#989898] mt-1">
+                            This helps balance your workload and prevents over-scheduling.
+                          </p>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-[#242424] mb-2">
+                            Notification Method
+                          </label>
+                          <Select
+                            value={notificationMethod}
+                            onValueChange={setNotificationMethod}
+                          >
+                            <SelectTrigger className="w-full h-11 rounded-lg border border-[#D3D3D3] bg-white pl-3 pr-10 text-sm text-[#242424] focus:ring-2 focus:ring-[#0A3D3A] cursor-pointer">
+                              <SelectValue placeholder="Select method" />
+                            </SelectTrigger>
+                            <SelectContent className="w-[calc(100%-2rem)] max-w-[280px]">
+                              <SelectItem value="both">Both Email &amp; SMS</SelectItem>
+                              <SelectItem value="email">Email Only</SelectItem>
+                              <SelectItem value="sms">SMS Only</SelectItem>
+                              <SelectItem value="none">None</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-[#989898] mt-1">
+                            How you receive new job assignments.
+                          </p>
+                        </div>
           </div>
         </div>
 
