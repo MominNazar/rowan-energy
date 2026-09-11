@@ -125,8 +125,8 @@ const AdminLeads = () => {
                     <span className={`text-xs ${lead.followUp === "Yes" ? "text-[#0A3D3A] font-medium" : "text-[#989898]"}`}>{lead.followUp}</span>
                     <span className="text-[#505050] text-xs">{lead.date}</span>
                     <div className="flex items-center gap-1">
+                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="View"><Eye size={14} /></button>
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="Call"><Phone size={14} /></button>
-                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="Email"><Mail size={14} /></button>
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="More"><MoreHorizontal size={14} /></button>
                     </div>
                   </div>
