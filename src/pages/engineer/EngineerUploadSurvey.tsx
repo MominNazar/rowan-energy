@@ -83,13 +83,15 @@ const UploadField = ({
         onClick={() => inputRef.current?.click()}
         onDrop={(event) => onDrop(field.key, event)}
         onDragOver={onDragOver}
-        className="border-2 border-dashed border-[#D3D3D3] rounded-xl h-36 flex flex-col items-center justify-center gap-2 hover:border-[#0A3D3A] transition-colors cursor-pointer"
+        className="border-2 border-dashed border-[#D3D3D3] rounded-xl min-h-[9rem] sm:h-36 px-4 flex flex-col items-center justify-center gap-2 text-center hover:border-[#0A3D3A] transition-colors cursor-pointer"
       >
-        <Upload size={24} className="text-[#0A3D3A]" />
-        <p className="text-sm text-[#505050]">
+        <Upload size={22} className="text-[#0A3D3A] shrink-0" />
+        <p className="text-[13px] leading-snug text-[#505050] sm:text-sm">
           Drag and drop files here or click to browse
         </p>
-        <p className="text-xs text-[#989898]">{field.supported}</p>
+        <p className="text-[11px] leading-snug text-[#989898] sm:text-xs">
+          {field.supported}
+        </p>
         <input
           ref={inputRef}
           type="file"
