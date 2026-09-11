@@ -69,20 +69,20 @@ const AdminLeads = () => {
               <Filter size={14} /> More Filters
             </Button>
           </div>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <Button className="h-9 px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-xs font-semibold">
-              <Phone size={13} className="mr-1.5" />
-              Call All New Leads
-            </Button>
-            <Button variant="outline" className="h-9 px-4 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-xs font-semibold">
-              <Phone size={13} className="mr-1.5" />
-              Call All Qualified Leads
-            </Button>
-            <Button variant="outline" className="h-9 px-4 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-xs font-semibold ml-auto">
-              <Mail size={14} className="mr-1.5" />
-              Export CSV
-            </Button>
-          </div>
+          <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row sm:items-start sm:gap-2 sm:justify-start">
+                      <Button className="h-9 w-full sm:w-auto px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-xs font-semibold">
+                        <Phone size={13} className="mr-1.5" />
+                        Call All New Leads
+                      </Button>
+                      <Button variant="outline" className="h-9 w-full sm:w-auto px-4 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-xs font-semibold">
+                        <Phone size={13} className="mr-1.5" />
+                        Call All Qualified Leads
+                      </Button>
+                      <Button variant="outline" className="h-9 w-full sm:w-auto px-4 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-xs font-semibold">
+                        <Mail size={14} className="mr-1.5" />
+                        Export CSV
+                      </Button>
+                    </div>
         </div>
 
         <div className="bg-white rounded-xl border border-[#E0E0E0] overflow-hidden">
