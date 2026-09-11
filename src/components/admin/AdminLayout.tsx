@@ -133,7 +133,7 @@ export const AdminLayout = ({
       )}
 
       <div className="flex-1 flex flex-col min-w-0 lg:ml-60">
-        <header className="h-16 bg-white border-b border-[#E0E0E0] flex items-center gap-3 px-4 sm:px-6">
+        <header className="h-20 bg-white border-b border-[#E0E0E0] flex items-center gap-3 px-4 sm:px-6">
           <button
             type="button"
             className="lg:hidden p-2 -ml-1 text-[#242424] hover:bg-[#F5F5F5] rounded-md transition-colors shrink-0"
@@ -144,7 +144,7 @@ export const AdminLayout = ({
           </button>
 
           {header ? (
-            <div className="flex flex-1 items-center justify-between gap-3">{header}</div>
+            <div className="flex flex-1 items-center justify-between gap-4 px-2">{header}</div>
           ) : (
             <div className="flex min-w-0 flex-1 items-center gap-3">
               {title && (
