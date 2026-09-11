@@ -186,19 +186,19 @@ const EngineerAvailability = () => {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
-          <Button
-            variant="outline"
-            className="h-11 px-5 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold"
-          >
-            <X size={15} className="mr-2" />
-            Cancel
-          </Button>
-          <Button className="h-11 px-5 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
-            <Save size={15} className="mr-2" />
-            Save Availability
-          </Button>
-        </div>
+        <div className="flex flex-col gap-3 pt-2">
+                  <Button
+                    variant="outline"
+                    className="h-11 px-5 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold w-full"
+                  >
+                    <X size={15} className="mr-2" />
+                    Cancel
+                  </Button>
+                  <Button className="h-11 px-5 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold w-full">
+                    <Save size={15} className="mr-2" />
+                    Save Availability
+                  </Button>
+                </div>
       </div>
     </EngineerLayout>
   );
