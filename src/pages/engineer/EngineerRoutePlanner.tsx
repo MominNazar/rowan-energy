@@ -44,8 +44,6 @@ const routeJobs = [
 ];
 
 const EngineerRoutePlanner = () => {
-  const [traffic, setTraffic] = useState<"light" | "clear">("light");
-
   return (
     <EngineerLayout title="My Route Planner" subtitle="Optimize your daily travel route">
       <div className="space-y-3 sm:space-y-4">
