@@ -119,7 +119,7 @@ const AdminJobs = () => {
                     </div>
                     <span className="text-[#505050] text-xs">{job.time}</span>
                     {job.status === "Revisit Needed" ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FEE2E2] px-3 py-1.5 text-xs font-semibold text-[#DC2626]">
+                      <span className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#FEE2E2] px-3 py-1.5 text-xs font-semibold text-[#DC2626]">
                         <AlertTriangle size={14} className="shrink-0" />
                         Revisit Needed
                       </span>
