@@ -310,11 +310,12 @@ const EngineerChecklist = () => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-start gap-3 mt-4">
-        <Button variant="outline" className="h-10 px-4 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        <Button variant="outline" className="h-11 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
+          <FileText size={15} className="mr-2" />
           Save Checklist &amp; Risk Assessment
         </Button>
-        <Button className="h-10 px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
+        <Button className="h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">
           <Check size={15} className="mr-2" />
           Mark Pre-Survey Complete
         </Button>
