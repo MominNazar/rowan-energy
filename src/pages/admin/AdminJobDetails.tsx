@@ -26,27 +26,27 @@ const AdminJobDetails = () => {
   return (
     <AdminLayout
       header={
-        <div className="flex w-full flex-col gap-3">
-          <div className="min-w-0">
-            <Link to="/admin/jobs" className="inline-flex items-center gap-1 text-xs font-medium text-[#0A3D3A] hover:underline mb-1.5">
-              <ChevronLeft size={14} className="shrink-0" /> Back to Jobs
-            </Link>
-            <h1 className="font-display text-lg font-semibold text-[#242424] leading-tight">Job {job.id} - &quot;{job.site}&quot;</h1>
-            <p className="text-xs text-[#989898] mt-1">Survey job details and management</p>
-          </div>
-          <div className="flex items-center gap-3 flex-wrap">
-            <Button className="h-9 px-3 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-xs font-semibold">
-              <Download size={14} className="mr-1.5 shrink-0" />
-              Download Report
-            </Button>
-            <div className="flex items-center gap-2">
-              <button className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center shrink-0">D</button>
-              <span className="text-sm font-medium text-[#242424]">David</span>
-              <ChevronDown size={14} className="text-[#989898] shrink-0" />
-            </div>
-          </div>
-        </div>
-      }
+              <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                <div className="min-w-0">
+                  <Link to="/admin/jobs" className="inline-flex items-center gap-1 text-xs font-medium text-[#0A3D3A] hover:underline mb-1.5">
+                    <ChevronLeft size={14} className="shrink-0" /> Back to Jobs
+                  </Link>
+                  <h1 className="font-display text-lg font-semibold text-[#242424] leading-tight">Job {job.id} - &quot;{job.site}&quot;</h1>
+                  <p className="text-xs text-[#989898] mt-1">Survey job details and management</p>
+                </div>
+                <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+                  <Button className="h-9 px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-xs font-semibold">
+                    <Download size={14} className="mr-1.5 shrink-0" />
+                    Download Report
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    <button className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center shrink-0">D</button>
+                    <span className="text-sm font-medium text-[#242424]">David</span>
+                    <ChevronDown size={14} className="text-[#989898] shrink-0" />
+                  </div>
+                </div>
+              </div>
+            }
     >
       <div className="space-y-5">
 
