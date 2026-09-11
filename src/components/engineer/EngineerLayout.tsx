@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
+  ArrowLeft,
   Bell,
   ChevronRight,
   Home,
@@ -75,7 +76,8 @@ export const EngineerLayout = ({
             const isActive =
               location.pathname === item.to ||
               (item.to === "/engineer/job-details" &&
-                location.pathname.startsWith("/engineer/job-details"));
+                (location.pathname.startsWith("/engineer/job-details") ||
+                  location.pathname.startsWith("/engineer/upload")));
             const Icon = item.icon;
             return (
               <Link
@@ -149,6 +151,15 @@ export const EngineerLayout = ({
             </button>
 
             <div className="min-w-0">
+              {backTo && (
+                <Link
+                  to={backTo}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-[#505050] hover:text-[#242424] transition-colors mb-1.5"
+                >
+                  <ArrowLeft size={14} />
+                  Back to Job Details
+                </Link>
+              )}
               <h1 className="font-display text-base sm:text-lg md:text-2xl font-semibold text-[#242424] leading-tight break-words">
                 {title}
               </h1>

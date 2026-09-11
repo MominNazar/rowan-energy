@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AlertTriangle,
   Bot,
@@ -276,10 +277,12 @@ const EngineerChecklist = () => {
                         <FileText size={15} className="mr-2" />
                         Save Checklist &amp; Risk Assessment
                       </Button>
-                      <Button className="h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold w-full">
-                        <Check size={15} className="mr-2" />
-                        Mark Pre-Survey Complete
-                      </Button>
+                      <Link to="/engineer/upload" className="w-full">
+                        <Button className="h-11 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold w-full">
+                          <Check size={15} className="mr-2" />
+                          Mark Pre-Survey Complete
+                        </Button>
+                      </Link>
                     </div>
                   </div>
           
