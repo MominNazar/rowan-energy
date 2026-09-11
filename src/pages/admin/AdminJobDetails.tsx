@@ -24,9 +24,9 @@ const AdminJobDetails = () => {
   const job = jobs.find((j) => j.id.replace("#", "") === id) ?? jobs[0];
 
   return (
-    <AdminLayout title="" subtitle="" hideUser>
-      <div className="space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#EBEBEB]">
+    <AdminLayout
+      header={
+        <div className="flex w-full flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="min-w-0">
             <Link to="/admin/jobs" className="inline-flex items-center gap-1 text-xs font-medium text-[#0A3D3A] hover:underline mb-1">
               <ChevronLeft size={14} /> Back to Jobs
@@ -44,6 +44,9 @@ const AdminJobDetails = () => {
             <ChevronDown size={14} className="text-[#989898]" />
           </div>
         </div>
+      }
+    >
+      <div className="space-y-5">
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div className="bg-white rounded-xl border border-[#E0E0E0] p-5">

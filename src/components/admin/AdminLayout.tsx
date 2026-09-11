@@ -21,6 +21,7 @@ interface AdminLayoutProps {
   subtitle?: string;
   showNotification?: boolean;
   hideUser?: boolean;
+  header?: ReactNode;
 }
 
 const navItems = [
@@ -40,6 +41,7 @@ export const AdminLayout = ({
   subtitle,
   showNotification = false,
   hideUser = false,
+  header,
 }: AdminLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
@@ -131,56 +133,63 @@ export const AdminLayout = ({
       )}
 
       <div className="flex-1 flex flex-col min-w-0 lg:ml-60">
-        <header className="h-16 bg-white border-b border-[#E0E0E0] flex items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-3 min-w-0">
-            <button
-              type="button"
-              className="lg:hidden p-2 -ml-1 text-[#242424] hover:bg-[#F5F5F5] rounded-md transition-colors shrink-0"
-              onClick={() => setIsSidebarOpen(true)}
-              aria-label="Open sidebar menu"
-            >
-              <Menu size={22} />
-            </button>
-            {title && (
-                          <div className="min-w-0">
-                            <h1 className="font-display text-[20px] font-semibold text-[#242424] truncate">
-                              {title}
-                            </h1>
-                            {subtitle && (
-                              <p className="text-xs text-[#989898] mt-0.5 truncate">
-                                {subtitle}
-                              </p>
-                            )}
-                          </div>
-                        )}
-                      </div>
+        <header className="h-16 bg-white border-b border-[#E0E0E0] flex items-center gap-3 px-4 sm:px-6">
+          <button
+            type="button"
+            className="lg:hidden p-2 -ml-1 text-[#242424] hover:bg-[#F5F5F5] rounded-md transition-colors shrink-0"
+            onClick={() => setIsSidebarOpen(true)}
+            aria-label="Open sidebar menu"
+          >
+            <Menu size={22} />
+          </button>
 
-          <div className="flex items-center gap-3">
-                      {showNotification && !hideUser && (
-                        <button
-                          type="button"
-                          className="relative w-10 h-10 rounded-lg border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors shrink-0"
-                          aria-label="View notifications"
-                        >
-                          <Bell size={18} />
-                          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#EF4444] ring-2 ring-white" />
-                        </button>
-                      )}
-                      {!hideUser && (
-                        <button
-                          type="button"
-                          className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg border border-transparent hover:bg-[#F5F5F5] transition-colors shrink-0"
-                        >
-                          <div className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center">
-                            D
-                          </div>
-                          <span className="hidden sm:inline text-sm font-medium text-[#242424]">
-                            David
-                          </span>
-                          <ChevronDown size={14} className="hidden sm:block text-[#989898]" />
-                        </button>
-                      )}
-                    </div>
+          {header ? (
+            <div className="flex flex-1 items-center justify-between gap-3">{header}</div>
+          ) : (
+            <div className="flex min-w-0 flex-1 items-center gap-3">
+              {title && (
+                <div className="min-w-0">
+                  <h1 className="font-display text-[20px] font-semibold text-[#242424] truncate">
+                    {title}
+                  </h1>
+                  {subtitle && (
+                    <p className="text-xs text-[#989898] mt-0.5 truncate">
+                      {subtitle}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {!header && (
+            <div className="flex items-center gap-3">
+              {showNotification && !hideUser && (
+                <button
+                  type="button"
+                  className="relative w-10 h-10 rounded-lg border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors shrink-0"
+                  aria-label="View notifications"
+                >
+                  <Bell size={18} />
+                  <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#EF4444] ring-2 ring-white" />
+                </button>
+              )}
+              {!hideUser && (
+                <button
+                  type="button"
+                  className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg border border-transparent hover:bg-[#F5F5F5] transition-colors shrink-0"
+                >
+                  <div className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center">
+                    D
+                  </div>
+                  <span className="hidden sm:inline text-sm font-medium text-[#242424]">
+                    David
+                  </span>
+                  <ChevronDown size={14} className="hidden sm:block text-[#989898]" />
+                </button>
+              )}
+            </div>
+          )}
         </header>
 
         <main className="flex-1 p-5 sm:p-6 overflow-auto">
