@@ -3,8 +3,9 @@ import {
   Eye,
   FileText,
   Filter,
+  Grid2X2,
+  List,
   Mail,
-  MessageSquare,
   MoreHorizontal,
   Phone,
   Search,
@@ -91,8 +92,8 @@ const AdminLeads = () => {
           <div className="p-4 border-b border-[#E0E0E0] flex items-center justify-between">
             <h2 className="font-display text-sm font-semibold text-[#242424]">All Leads <span className="text-[#989898] font-normal">(127)</span></h2>
             <div className="flex items-center gap-2">
-              <button className="p-2 text-[#505050] hover:text-[#242424] transition-colors" aria-label="Table view"><Users size={16} /></button>
-              <button className="p-2 text-[#505050] hover:text-[#242424] transition-colors" aria-label="Card view"><MoreHorizontal size={16} /></button>
+              <button className="p-2 text-[#505050] hover:text-[#242424] transition-colors" aria-label="Table view"><List size={16} /></button>
+                            <button className="p-2 text-[#505050] hover:text-[#242424] transition-colors" aria-label="Card view"><Grid2X2 size={16} /></button>
             </div>
           </div>
           <div className="overflow-x-auto">
