@@ -1,12 +1,16 @@
 import { useState } from "react";
 import {
   AlertTriangle,
+  Calendar,
   ChevronDown,
   Download,
   Ellipsis,
   Eye,
+  FileText,
   Filter,
   MapPin,
+  MoreHorizontal,
+  RefreshCw,
   Settings,
   User,
 } from "lucide-react";
@@ -129,8 +133,26 @@ const AdminJobs = () => {
                     <span className={`text-xs font-medium ${job.upload === "Uploaded" ? "text-[#0A3D3A]" : job.upload === "Missing" ? "text-[#EF4444]" : "text-[#505050]"}`}>{job.upload}</span>
                     <div className="flex items-center gap-1">
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]"><Eye size={14} /></button>
-                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]"><MapPin size={14} /></button>
-                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]" onClick={() => setSelectedJob(job.id)}><Settings size={14} /></button>
+                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]">
+                        {job.status === "Completed" ? (
+                          <FileText size={14} />
+                        ) : job.status === "Revisit Needed" ? (
+                          <RefreshCw size={14} />
+                        ) : job.status === "Scheduled" ? (
+                          <Calendar size={14} />
+                        ) : (
+                          <MapPin size={14} />
+                        )}
+                      </button>
+                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]">
+                        {job.status === "Completed" ? (
+                          <Download size={14} />
+                        ) : job.status === "Scheduled" ? (
+                          <Settings size={14} />
+                        ) : (
+                          <MoreHorizontal size={14} />
+                        )}
+                      </button>
                     </div>
                   </div>
                 ))}
