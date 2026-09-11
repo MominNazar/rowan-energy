@@ -310,7 +310,7 @@ const EngineerChecklist = () => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-end gap-3 mt-4">
+      <div className="flex flex-col sm:flex-row justify-start gap-3 mt-4">
         <Button variant="outline" className="h-10 px-4 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">
           Save Checklist &amp; Risk Assessment
         </Button>
