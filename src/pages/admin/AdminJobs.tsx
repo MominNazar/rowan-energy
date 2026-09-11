@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AlertTriangle,
   Calendar,
@@ -22,14 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-const jobs = [
-  { id: "#1052", site: "Greenfield Solar Farm", region: "North England", engineer: "Alex Khan", time: "Jul 25 - 10:00 AM to 11:30 AM", status: "Scheduled", upload: "Pending" },
-  { id: "#1051", site: "WindTech Industrial", region: "West Midlands", engineer: "Fatima Ahmed", time: "Jul 24 - 14:00 PM to 15:30 PM", status: "In Progress", upload: "Pending" },
-  { id: "#1050", site: "SolarMax Distribution", region: "East Midlands", engineer: "Owen Williams", time: "Jul 23 - 09:00 AM to 10:30 AM", status: "Completed", upload: "Uploaded" },
-  { id: "#1049", site: "EcoEnergy Plant", region: "London", engineer: "Sarah Mitchell", time: "Jul 23 - 13:00 PM to 14:30 PM", status: "Revisit Needed", upload: "Missing" },
-  { id: "#1048", site: "GreenTech Solutions", region: "South England", engineer: "Alex Khan", time: "Jul 22 - 10:00 AM to 11:30 AM", status: "Scheduled", upload: "Pending" },
-];
+import { jobs } from "@/data/adminJobs";
 
 const AdminJobs = () => {
   const [query, setQuery] = useState("");
@@ -133,7 +127,7 @@ const AdminJobs = () => {
                     )}
                     <span className={`text-xs font-medium ${job.upload === "Uploaded" ? "text-[#0A3D3A]" : job.upload === "Missing" ? "text-[#EF4444]" : "text-[#505050]"}`}>{job.upload}</span>
                     <div className="flex items-center gap-1">
-                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]"><Eye size={14} /></button>
+                      <Link to={`/admin/jobs/${job.id.replace("#", "")}`} className="p-1.5 text-[#505050] hover:text-[#0A3D3A]"><Eye size={14} /></Link>
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]">
                         {job.status === "Completed" ? (
                           <FileText size={14} />
