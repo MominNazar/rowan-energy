@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  AlertTriangle,
   ChevronDown,
   Download,
   Eye,
@@ -113,12 +114,18 @@ const AdminJobs = () => {
                       <span className="text-[#505050] text-xs">{job.engineer}</span>
                     </div>
                     <span className="text-[#505050] text-xs">{job.time}</span>
-                    <Badge className={`text-[10px] w-fit ${
-                      job.status === "Completed" ? "bg-[#E8F6F3] text-[#0A3D3A]" :
-                      job.status === "In Progress" ? "bg-[#FEF3C7] text-[#92400E]" :
-                      job.status === "Revisit Needed" ? "bg-[#FEE2E2] text-[#DC2626]" :
-                      "bg-[#E8F6F3] text-[#0A3D3A]"
-                    }`}>{job.status}</Badge>
+                    {job.status === "Revisit Needed" ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FEE2E2] px-3 py-1.5 text-xs font-semibold text-[#DC2626]">
+                        <AlertTriangle size={12} />
+                        Revisit Needed
+                      </span>
+                    ) : (
+                      <Badge className={`text-[10px] w-fit ${
+                        job.status === "Completed" ? "bg-[#E8F6F3] text-[#0A3D3A]" :
+                        job.status === "In Progress" ? "bg-[#FEF3C7] text-[#92400E]" :
+                        "bg-[#E8F6F3] text-[#0A3D3A]"
+                      }`}>{job.status}</Badge>
+                    )}
                     <span className={`text-xs font-medium ${job.upload === "Uploaded" ? "text-[#0A3D3A]" : job.upload === "Missing" ? "text-[#EF4444]" : "text-[#505050]"}`}>{job.upload}</span>
                     <div className="flex items-center gap-1">
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]"><Eye size={14} /></button>
