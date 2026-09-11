@@ -1,8 +1,10 @@
 import { useState } from "react";
 import {
-  ChevronDown,
+  Eye,
+  FileText,
   Filter,
   Mail,
+  MessageSquare,
   MoreHorizontal,
   Phone,
   Search,
