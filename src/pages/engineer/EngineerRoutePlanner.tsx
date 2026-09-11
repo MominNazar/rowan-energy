@@ -75,7 +75,7 @@ const EngineerRoutePlanner = () => {
                           <ChevronRight size={16} />
                         </Button>
                         <Select defaultValue="daily">
-                          <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-6 w-auto">
+                          <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-4 w-auto">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
@@ -87,7 +87,7 @@ const EngineerRoutePlanner = () => {
           {/* Filters */}
           <div className="flex flex-wrap gap-2">
                       <Select defaultValue="all-regions">
-                        <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-6 w-auto">
+                        <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-4 w-auto">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
@@ -97,7 +97,7 @@ const EngineerRoutePlanner = () => {
                           </SelectContent>
                       </Select>
                       <Select defaultValue="all-status">
-                        <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-6 w-auto">
+                        <SelectTrigger className="h-9 rounded-lg border-[#E0E0E0] bg-white text-sm text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#0A3D3A] pr-4 w-auto">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent className="w-[calc(100%-1rem)] max-w-[calc(100vw-2rem)]">
