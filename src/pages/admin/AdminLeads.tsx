@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Briefcase,
   Eye,
   FileText,
   Filter,
@@ -8,6 +9,7 @@ import {
   Mail,
   MoreHorizontal,
   Phone,
+  RefreshCw,
   Search,
   Users,
 } from "lucide-react";
@@ -127,7 +129,15 @@ const AdminLeads = () => {
                     <span className="text-[#505050] text-xs">{lead.date}</span>
                     <div className="flex items-center gap-1">
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="View"><Eye size={14} /></button>
-                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="Call"><Phone size={14} /></button>
+                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label={lead.status === "Converted" ? "View Job" : lead.status === "Abandoned" ? "Recover" : "Call"}>
+                        {lead.status === "Converted" ? (
+                          <Briefcase size={14} />
+                        ) : lead.status === "Abandoned" ? (
+                          <RefreshCw size={14} />
+                        ) : (
+                          <Phone size={14} />
+                        )}
+                      </button>
                       <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A] transition-colors" aria-label="More"><MoreHorizontal size={14} /></button>
                     </div>
                   </div>
