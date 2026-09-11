@@ -149,30 +149,30 @@ export const EngineerLayout = ({
             </button>
 
             <div className="min-w-0">
-              <h1 className="font-display text-lg sm:text-xl md:text-2xl font-semibold text-[#242424] leading-tight truncate">
-                {title}
-              </h1>
-              {subtitle && (
-                <p className="text-xs sm:text-sm text-[#505050] truncate mt-0.5">
-                  {subtitle}
-                </p>
-              )}
-            </div>
+                          <h1 className="font-display text-base sm:text-lg md:text-2xl font-semibold text-[#242424] leading-tight break-words">
+                            {title}
+                          </h1>
+                          {subtitle && (
+                            <p className="text-xs sm:text-sm text-[#505050] break-words mt-0.5">
+                              {subtitle}
+                            </p>
+                          )}
+                        </div>
           </div>
 
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <button
-              type="button"
-              className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors"
-              aria-label="View notifications"
-            >
-              <Bell size={18} />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#37E49E] ring-2 ring-white" />
-            </button>
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0A3D3A] text-white font-semibold text-xs sm:text-sm flex items-center justify-center">
-              AJ
-            </div>
-          </div>
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                      <button
+                        type="button"
+                        className="hidden sm:flex relative w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors"
+                        aria-label="View notifications"
+                      >
+                        <Bell size={18} />
+                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#37E49E] ring-2 ring-white" />
+                      </button>
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#0A3D3A] text-white font-semibold text-[10px] flex items-center justify-center">
+                        AJ
+                      </div>
+                    </div>
         </header>
 
         {/* Page Content */}
