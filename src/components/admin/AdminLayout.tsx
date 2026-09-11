@@ -141,17 +141,19 @@ export const AdminLayout = ({
             >
               <Menu size={22} />
             </button>
-            <div className="min-w-0">
-              <h1 className="font-display text-[20px] font-semibold text-[#242424] truncate">
-                {title}
-              </h1>
-              {subtitle && (
-                <p className="text-xs text-[#989898] mt-0.5 truncate">
-                  {subtitle}
-                </p>
-              )}
-            </div>
-          </div>
+            {title && (
+                          <div className="min-w-0">
+                            <h1 className="font-display text-[20px] font-semibold text-[#242424] truncate">
+                              {title}
+                            </h1>
+                            {subtitle && (
+                              <p className="text-xs text-[#989898] mt-0.5 truncate">
+                                {subtitle}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
 
           <div className="flex items-center gap-3">
                       {showNotification && !hideUser && (
