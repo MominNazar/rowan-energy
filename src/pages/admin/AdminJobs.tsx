@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   AlertTriangle,
   Calendar,
+  Check,
   ChevronDown,
   Download,
   Eye,
@@ -15,6 +16,7 @@ import {
   RefreshCw,
   Settings,
   User,
+  X,
 } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +32,8 @@ const AdminJobs = () => {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [newEngineer, setNewEngineer] = useState("");
   const [note, setNote] = useState("");
+
+  const selectedJobData = selectedJob ? jobs.find((j) => j.id === selectedJob) : null;
 
   const filtered = jobs.filter((j) => {
     const hay = `${j.id} ${j.site} ${j.region} ${j.engineer}`.toLowerCase();
@@ -139,14 +143,12 @@ const AdminJobs = () => {
                           <MapPin size={14} />
                         )}
                       </button>
-                      <button className="p-1.5 text-[#505050] hover:text-[#0A3D3A]">
-                        {job.status === "Completed" ? (
-                          <Download size={14} />
-                        ) : job.status === "Scheduled" ? (
-                          <Settings size={14} />
-                        ) : (
-                          <MoreHorizontal size={14} />
-                        )}
+                      <button
+                        className="p-1.5 text-[#505050] hover:text-[#0A3D3A]"
+                        onClick={() => { setSelectedJob(job.id); setNewEngineer(""); setNote(""); }}
+                        aria-label="Change Engineer"
+                      >
+                        <User size={14} />
                       </button>
                     </div>
                   </div>
@@ -157,57 +159,79 @@ const AdminJobs = () => {
         </div>
       </div>
 
-      {selectedJob && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="bg-white rounded-xl border border-[#E0E0E0] w-full max-w-lg shadow-lg">
-            <div className="flex items-center justify-between p-4 border-b border-[#E0E0E0]">
-              <h3 className="font-display text-sm font-semibold text-[#242424]">Change Engineer for Job {selectedJob}</h3>
-              <button onClick={() => setSelectedJob(null)} className="text-[#989898] hover:text-[#242424]"><MoreHorizontal size={16} className="rotate-90" /></button>
-            </div>
-            <div className="p-4 space-y-4">
-              <div className="bg-[#F5F5F5] rounded-lg p-3 text-xs text-[#505050]">
-                <p>Site: Greenfield Solar Farm</p>
-                <p>Scheduled: July 25 - 10:00 AM</p>
-                <p>Region: West England</p>
+      {selectedJobData && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+                <div className="bg-white rounded-xl border border-[#E0E0E0] w-full max-w-lg shadow-lg overflow-hidden">
+                  <div className="flex items-center justify-between p-4 border-b border-[#E0E0E0]">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full bg-[#E8F6F3] flex items-center justify-center">
+                        <User size={14} className="text-[#0A3D3A]" />
+                      </div>
+                      <h3 className="font-display text-sm font-semibold text-[#242424]">Change Engineer for Job {selectedJobData.id}</h3>
+                    </div>
+                    <button onClick={() => setSelectedJob(null)} className="text-[#989898] hover:text-[#242424] p-1">
+                      <X size={16} />
+                    </button>
+                  </div>
+                  <div className="p-4 space-y-4">
+                    <div className="bg-[#F5F5F5] rounded-lg p-3 space-y-1.5 text-xs">
+                      <div className="flex items-center gap-2">
+                        <MapPin size={12} className="text-[#989898] shrink-0" />
+                        <span className="text-[#505050]">Site:</span>
+                        <span className="font-medium text-[#242424]">{selectedJobData.site}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Calendar size={12} className="text-[#989898] shrink-0" />
+                        <span className="text-[#505050]">Scheduled:</span>
+                        <span className="font-medium text-[#242424]">{selectedJobData.time}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin size={12} className="text-[#989898] shrink-0" />
+                        <span className="text-[#505050]">Region:</span>
+                        <span className="font-medium text-[#242424]">{selectedJobData.region}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-xs font-medium text-[#242424]">Select New Engineer</Label>
+                      <Select value={newEngineer} onValueChange={setNewEngineer}>
+                        <SelectTrigger className="h-10 mt-1">
+                          <SelectValue placeholder="Choose available engineer..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="alex">Alex Khan</SelectItem>
+                          <SelectItem value="fatima">Fatima Ahmed</SelectItem>
+                          <SelectItem value="owen">Owen Williams</SelectItem>
+                          <SelectItem value="sarah">Sarah Mitchell</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="border border-[#E0E0E0] rounded-lg p-3 space-y-2 text-xs">
+                      <p className="font-medium text-[#242424]">Availability Summary</p>
+                      <div className="flex justify-between items-center"><span className="text-[#505050]">Time Free?</span><span className="text-[#0A3D3A] font-medium flex items-center gap-1"><Check size={12} /> Yes</span></div>
+                      <div className="flex justify-between items-center"><span className="text-[#505050]">Other jobs that day:</span><span className="font-medium text-[#242424]">2</span></div>
+                      <div className="flex justify-between items-center"><span className="text-[#505050]">Regions matched:</span><span className="text-[#0A3D3A] font-medium flex items-center gap-1"><Check size={12} /> Yes</span></div>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <FileText size={12} className="text-[#989898]" />
+                        <Label className="text-xs font-medium text-[#242424]">Optional Note (reason for reassignment)</Label>
+                      </div>
+                      <Textarea
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+                        placeholder="e.g., Alex unavailable - reassigning to Fatima"
+                        rows={3}
+                        className="border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#0A3D3A]"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-3 p-4 border-t border-[#E0E0E0]">
+                    <Button variant="outline" onClick={() => setSelectedJob(null)} className="h-10 px-4 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">Cancel</Button>
+                    <Button onClick={() => setSelectedJob(null)} className="h-10 px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">Confirm Change</Button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <Label className="text-xs font-medium text-[#242424]">Select New Engineer</Label>
-                <Select value={newEngineer} onValueChange={setNewEngineer}>
-                  <SelectTrigger className="h-10 mt-1">
-                    <SelectValue placeholder="Choose available engineer..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="alex">Alex Khan</SelectItem>
-                    <SelectItem value="fatima">Fatima Ahmed</SelectItem>
-                    <SelectItem value="owen">Owen Williams</SelectItem>
-                    <SelectItem value="sarah">Sarah Mitchell</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="border border-[#E0E0E0] rounded-lg p-3 space-y-2 text-xs">
-                <p className="font-medium text-[#242424]">Availability Summary</p>
-                <div className="flex justify-between"><span className="text-[#505050]">Time Free?</span><span className="text-[#0A3D3A] font-medium">✓ Yes</span></div>
-                <div className="flex justify-between"><span className="text-[#505050]">Other jobs that day:</span><span className="font-medium text-[#242424]">2</span></div>
-                <div className="flex justify-between"><span className="text-[#505050]">Regions matched:</span><span className="text-[#0A3D3A] font-medium">✓ Yes</span></div>
-              </div>
-              <div>
-                <Label className="text-xs font-medium text-[#242424]">Optional Note (reason for reassignment)</Label>
-                <Textarea
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  placeholder="e.g., Alex unavailable - reassigning to Fatima"
-                  rows={3}
-                  className="mt-1 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#0A3D3A]"
-                />
-              </div>
-            </div>
-            <div className="flex justify-end gap-3 p-4 border-t border-[#E0E0E0]">
-              <Button variant="outline" onClick={() => setSelectedJob(null)} className="h-10 px-4 border-[#D3D3D3] text-[#505050] hover:bg-[#F5F5F5] rounded-lg text-sm font-semibold">Cancel</Button>
-              <Button onClick={() => setSelectedJob(null)} className="h-10 px-4 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold">Confirm Change</Button>
-            </div>
-          </div>
-        </div>
-      )}
+            )}
     </AdminLayout>
   );
 };
