@@ -80,6 +80,7 @@ export const jobs: JobDetail[] = [
     specialRequirements: "High wind safety checklist required",
     upload: "Pending",
     status: "In Progress",
+    time: "Jul 24 - 2:00 PM to 3:30 PM",
     files: [
       { name: "Thermal Imagery", status: "Pending" },
       { name: "RGB Photos", status: "Missing" },
@@ -110,6 +111,7 @@ export const jobs: JobDetail[] = [
     specialRequirements: "None",
     upload: "Uploaded",
     status: "Completed",
+    time: "Jul 23 - 9:00 AM to 10:30 AM",
     files: [
       { name: "Thermal Imagery", status: "Uploaded" },
       { name: "RGB Photos", status: "Uploaded" },
@@ -140,6 +142,7 @@ export const jobs: JobDetail[] = [
     specialRequirements: "High priority - compliance deadline approaching",
     upload: "Missing",
     status: "Revisit Needed",
+    time: "Jul 23 - 1:00 PM to 2:30 PM",
     files: [
       { name: "Thermal Imagery", status: "Missing" },
       { name: "RGB Photos", status: "Missing" },
@@ -170,6 +173,7 @@ export const jobs: JobDetail[] = [
     specialRequirements: "Standard inspection protocol",
     upload: "Pending",
     status: "Scheduled",
+    time: "Jul 22 - 10:00 AM to 11:30 AM",
     files: [
       { name: "Thermal Imagery", status: "Missing" },
       { name: "RGB Photos", status: "Missing" },
