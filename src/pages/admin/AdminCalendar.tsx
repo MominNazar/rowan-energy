@@ -128,48 +128,50 @@ const AdminCalendar = () => {
             {hours.map((hour) => (
               <div key={hour} className="grid grid-cols-[72px_repeat(4,1fr)] border-b border-[#E0E0E0]">
                 <div className="h-16 px-2 py-2 text-[10px] text-[#989898] border-r border-[#E0E0E0] flex items-start pt-2">{hour}:00</div>
-                {engineers.map((_, i) => (
-                  <div key={`${hour}-${i}`} className="h-16 border-r border-[#E0E0E0] last:border-r-0" />
-                ))}
+                {engineers.map((eng, engIdx) => {
+                  const cellJobs = calendarJobs.filter(
+                    (j) => j.engineer === engIdx && Math.floor(j.start) === hour
+                  );
+                  return (
+                    <div key={`${hour}-${engIdx}`} className="h-16 border-r border-[#E0E0E0] last:border-r-0 relative">
+                      {cellJobs.map((job) => {
+                        const top = (job.start - hour) * 64;
+                        const height = Math.max(44, (job.end - job.start) * 64 - 8);
+                        return (
+                          <div
+                            key={job.id}
+                            style={{
+                              position: "absolute",
+                              top: `${top + 2}px`,
+                              height,
+                              background: job.color,
+                              color: job.textColor,
+                              borderRadius: 8,
+                              border: job.revisit ? "1.5px dashed #EF4444" : "1px solid rgba(10,61,58,0.12)",
+                              padding: 8,
+                            }}
+                            className="shadow-sm overflow-hidden cursor-pointer"
+                          >
+                            <div className="flex items-center justify-between gap-1">
+                              <p className="text-[11px] font-bold leading-tight">{job.id} {job.title}</p>
+                              <MoreHorizontal size={12} className="opacity-60 shrink-0" />
+                            </div>
+                            <p className="text-[9px] leading-tight mt-0.5 opacity-80">{job.time}</p>
+                            <p className="text-[9px] leading-tight opacity-80">{job.region}</p>
+                            {job.revisit && (
+                              <div className="mt-1 flex items-center gap-1 text-[#DC2626]">
+                                <AlertTriangle size={11} />
+                                <span className="text-[9px] font-medium">Revisit Needed</span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
               </div>
             ))}
-            {calendarJobs.map((job) => {
-              const leftPct = 12.5 + (job.start - 8) * (87.5 / 8);
-              const widthPct = (job.end - job.start) * (87.5 / 8);
-              const top = (job.start - 8) * 64;
-              const height = Math.max(44, (job.end - job.start) * 64 - 8);
-              return (
-                <div
-                  key={job.id}
-                  style={{
-                    position: "absolute",
-                    left: `calc(${leftPct}% + 8px)`,
-                    width: `calc(${widthPct}% - 16px)`,
-                    top: `${top + 2}px`,
-                    height,
-                    background: job.color,
-                    color: job.textColor,
-                    borderRadius: 8,
-                    border: job.revisit ? "1.5px dashed #EF4444" : "1px solid rgba(10,61,58,0.12)",
-                    padding: 8,
-                  }}
-                  className="shadow-sm overflow-hidden cursor-pointer"
-                >
-                  <div className="flex items-center justify-between gap-1">
-                    <p className="text-[11px] font-bold leading-tight">{job.id} {job.title}</p>
-                    <MoreHorizontal size={12} className="opacity-60 shrink-0" />
-                  </div>
-                  <p className="text-[9px] leading-tight mt-0.5 opacity-80">{job.time}</p>
-                  <p className="text-[9px] leading-tight opacity-80">{job.region}</p>
-                  {job.revisit && (
-                    <div className="mt-1 flex items-center gap-1 text-[#DC2626]">
-                      <AlertTriangle size={11} />
-                      <span className="text-[9px] font-medium">Revisit Needed</span>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
           </div>
         </div>
 
