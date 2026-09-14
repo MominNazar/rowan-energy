@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { format, parseISO } from "date-fns";
 import { CalendarDays, ChevronDown, Filter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SurveyProLayout } from "@/components/layout/SurveyProLayout";
+import { showSuccess } from "@/utils/toast";
+import { cn } from "@/lib/utils";
+
+const PAGE_SIZE = 5;
 
 const bookings = [
   {
@@ -51,17 +58,145 @@ const bookings = [
     status: "Completed",
     statusType: "completed",
   },
+  {
+    id: "6",
+    siteName: "Harbor View Residences",
+    siteType: "Condition Survey",
+    date: "March 5, 2025",
+    time: "9:00 AM",
+    status: "Scheduled",
+    statusType: "scheduled",
+  },
+  {
+    id: "7",
+    siteName: "Central Medical Plaza",
+    siteType: "Building Survey",
+    date: "January 20, 2025",
+    time: "10:30 AM",
+    status: "Completed",
+    statusType: "completed",
+  },
+  {
+    id: "8",
+    siteName: "Northgate Logistics Hub",
+    siteType: "Structural Survey",
+    date: "March 12, 2025",
+    time: "1:00 PM",
+    status: "In Progress",
+    statusType: "in-progress",
+  },
+  {
+    id: "9",
+    siteName: "Lakeside Retail Park",
+    siteType: "Safety Survey",
+    date: "February 5, 2025",
+    time: "3:00 PM",
+    status: "Completed",
+    statusType: "completed",
+  },
+  {
+    id: "10",
+    siteName: "Summit Corporate Tower",
+    siteType: "Building Survey",
+    date: "April 2, 2025",
+    time: "8:30 AM",
+    status: "Scheduled",
+    statusType: "scheduled",
+  },
+  {
+    id: "11",
+    siteName: "Eastside Data Center",
+    siteType: "Condition Survey",
+    date: "January 10, 2025",
+    time: "11:30 AM",
+    status: "Completed",
+    statusType: "completed",
+  },
+  {
+    id: "12",
+    siteName: "Greenfield Campus Block C",
+    siteType: "Structural Survey",
+    date: "March 28, 2025",
+    time: "2:30 PM",
+    status: "Scheduled",
+    statusType: "scheduled",
+  },
 ];
 
-const statusColors = {
+const statusColors: Record<string, string> = {
   scheduled: "bg-[#E8F6F3] text-[#083F3C]",
   "in-progress": "bg-[#FEF3C7] text-[#B45309]",
   completed: "bg-[#D1FAE5] text-[#065F46]",
 };
 
 const formatDate = (value: string) => {
-  const [year, month, day] = value.split("-");
-  return `${month}/${day}/${year}`;
+  try {
+    return format(parseISO(value), "MM/dd/yyyy");
+  } catch {
+    const [year, month, day] = value.split("-");
+    if (!year || !month || !day) return value;
+    return `${month}/${day}/${year}`;
+  }
+};
+
+const toIsoDate = (date: Date) => format(date, "yyyy-MM-dd");
+
+const parseBookingDate = (dateStr: string): Date | null => {
+  const parsed = new Date(dateStr);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+
+const toStartOfDay = (isoDate: string) => {
+  const d = new Date(`${isoDate}T00:00:00`);
+  return Number.isNaN(d.getTime()) ? null : d;
+};
+
+const toEndOfDay = (isoDate: string) => {
+  const d = new Date(`${isoDate}T23:59:59.999`);
+  return Number.isNaN(d.getTime()) ? null : d;
+};
+
+const DatePickerField = ({
+  value,
+  onChange,
+  ariaLabel,
+}: {
+  value: string;
+  onChange: (iso: string) => void;
+  ariaLabel: string;
+}) => {
+  const selected = value ? toStartOfDay(value) ?? undefined : undefined;
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          aria-label={ariaLabel}
+          className={cn(
+            "h-11 flex-1 min-w-0 justify-between rounded-xl border-[#D3D3D3] bg-white px-3 text-sm font-normal hover:bg-white",
+            !value && "text-[#989898]",
+          )}
+        >
+          <span className="truncate">
+            {value ? formatDate(value) : "mm/dd/yyyy"}
+          </span>
+          <CalendarDays size={16} className="text-[#989898] shrink-0 ml-2" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={selected}
+          onSelect={(date) => {
+            if (date) onChange(toIsoDate(date));
+          }}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
+  );
 };
 
 const CustomerBookings = () => {
@@ -71,14 +206,61 @@ const CustomerBookings = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredBookings = bookings.filter((booking) => {
-    const matchesStatus =
-      status === "all" || booking.status.toLowerCase() === status.toLowerCase();
-    const matchesSearch = booking.siteName
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    return matchesStatus && matchesSearch;
-  });
+  const filteredBookings = useMemo(() => {
+    const fromDate = dateFrom ? toStartOfDay(dateFrom) : null;
+    const toDate = dateTo ? toEndOfDay(dateTo) : null;
+
+    return bookings.filter((booking) => {
+      const matchesStatus =
+        status === "all" ||
+        booking.status.toLowerCase() === status.toLowerCase();
+      const matchesSearch = booking.siteName
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      const bookingDate = parseBookingDate(booking.date);
+      let matchesDate = true;
+      if (bookingDate && (fromDate || toDate)) {
+        if (fromDate && bookingDate < fromDate) matchesDate = false;
+        if (toDate && bookingDate > toDate) matchesDate = false;
+      } else if (!bookingDate && (fromDate || toDate)) {
+        matchesDate = false;
+      }
+
+      return matchesStatus && matchesSearch && matchesDate;
+    });
+  }, [dateFrom, dateTo, status, search]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredBookings.length / PAGE_SIZE));
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [dateFrom, dateTo, status, search]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedBookings = filteredBookings.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  const rangeStart =
+    filteredBookings.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(currentPage * PAGE_SIZE, filteredBookings.length);
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const handleApplyFilters = () => {
+    showSuccess(
+      `Filters applied — ${filteredBookings.length} booking${
+        filteredBookings.length === 1 ? "" : "s"
+      } found`
+    );
+  };
 
   return (
     <SurveyProLayout
@@ -86,39 +268,25 @@ const CustomerBookings = () => {
       subtitle="Manage your survey bookings"
     >
       {/* Filters Card */}
-      <div className="bg-white rounded-xl border border-[#D3D3D3] p-4 sm:p-5 lg:p-6 mb-6">
-        <div className="flex flex-col lg:flex-row lg:items-end gap-4">
+      <div className="bg-white rounded-xl border border-[#D3D3D3] p-3 sm:p-5 lg:p-6 mb-6 min-w-0 max-w-full">
+        <div className="flex flex-col lg:flex-row lg:items-center flex-wrap gap-4 min-w-0 max-w-full">
           {/* Date Range */}
-          <div className="flex-1 min-w-0 xl:w-[480px]">
+          <div className="flex-1 min-w-0 max-w-full xl:w-[480px]">
             <label className="block text-xs sm:text-sm font-semibold text-[#242424] mb-2">
               Date Range
             </label>
-            <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-              <div className="relative flex h-14 flex-1 min-w-0 cursor-pointer items-center rounded-xl border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
-                <input
-                  type="date"
-                  value={dateFrom}
-                  onChange={(e) => setDateFrom(e.target.value)}
-                  aria-label="Start date"
-                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0 focus:outline-none"
-                />
-                <span className="pointer-events-none w-full text-center text-base text-[#242424]">
-                  {dateFrom ? formatDate(dateFrom) : "mm/dd/yyyy"}
-                </span>
-              </div>
+            <div className="flex flex-col sm:flex-row sm:items-center flex-wrap gap-2 min-w-0 max-w-full">
+              <DatePickerField
+                value={dateFrom}
+                onChange={setDateFrom}
+                ariaLabel="Start date"
+              />
               <span className="hidden sm:block text-[#989898] text-sm px-1">to</span>
-              <div className="relative flex h-14 flex-1 min-w-0 cursor-pointer items-center rounded-xl border border-[#D3D3D3] bg-white focus-within:ring-2 focus-within:ring-[#083F3C]">
-                <input
-                  type="date"
-                  value={dateTo}
-                  onChange={(e) => setDateTo(e.target.value)}
-                  aria-label="End date"
-                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0 focus:outline-none"
-                />
-                <span className="pointer-events-none w-full text-center text-base text-[#242424]">
-                  {dateTo ? formatDate(dateTo) : "mm/dd/yyyy"}
-                </span>
-              </div>
+              <DatePickerField
+                value={dateTo}
+                onChange={setDateTo}
+                ariaLabel="End date"
+              />
             </div>
           </div>
 
@@ -168,7 +336,7 @@ const CustomerBookings = () => {
           {/* Apply Filters Button */}
           <Button
             className="w-full lg:w-auto h-11 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold whitespace-nowrap"
-            onClick={() => {}}
+            onClick={handleApplyFilters}
           >
             <Filter size={16} className="mr-2" />
             Apply Filters
@@ -198,7 +366,7 @@ const CustomerBookings = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredBookings.map((booking) => (
+              {paginatedBookings.map((booking) => (
                 <tr
                   key={booking.id}
                   className="border-b border-[#D3D3D3] last:border-b-0 hover:bg-[#F5F5F5] transition-colors"
@@ -237,7 +405,7 @@ const CustomerBookings = () => {
 
         {/* Mobile Cards */}
         <div className="md:hidden divide-y divide-[#D3D3D3]">
-          {filteredBookings.map((booking) => (
+          {paginatedBookings.map((booking) => (
             <Link
               key={booking.id}
               to={`/customer/bookings/${booking.id}`}
@@ -279,44 +447,46 @@ const CustomerBookings = () => {
 
       {/* Pagination */}
       {filteredBookings.length > 0 && (
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-5">
-        <p className="text-xs sm:text-sm text-[#989898]">
-          Showing 1 to {filteredBookings.length} of 12 results
-        </p>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-            disabled={currentPage === 1}
-            className="h-9 px-4 border border-[#D3D3D3] bg-white text-[#242424] text-sm font-medium rounded-lg hover:bg-[#F5F5F5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Previous
-          </button>
-          {[1, 2, 3].map((page) => (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-5">
+          <p className="text-xs sm:text-sm text-[#989898]">
+            Showing {rangeStart} to {rangeEnd} of {filteredBookings.length} results
+          </p>
+          <div className="flex items-center gap-2">
             <button
-              key={page}
               type="button"
-              onClick={() => setCurrentPage(page)}
-              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors border ${
-                page === currentPage
-                  ? "bg-[#083F3C] text-white border-[#083F3C]"
-                  : "bg-white text-[#242424] border-[#D3D3D3] hover:bg-[#F5F5F5]"
-              }`}
+              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
+              className="h-9 px-4 border border-[#D3D3D3] bg-white text-[#242424] text-sm font-medium rounded-lg hover:bg-[#F5F5F5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {page}
+              Previous
             </button>
-          ))}
-          <button
-            type="button"
-            onClick={() => setCurrentPage((prev) => Math.min(3, prev + 1))}
-            disabled={currentPage === 3}
-            className="h-9 px-4 border border-[#D3D3D3] bg-white text-[#242424] text-sm font-medium rounded-lg hover:bg-[#F5F5F5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Next
-          </button>
+            {pageNumbers.map((page) => (
+              <button
+                key={page}
+                type="button"
+                onClick={() => setCurrentPage(page)}
+                className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors border ${
+                  page === currentPage
+                    ? "bg-[#083F3C] text-white border-[#083F3C]"
+                    : "bg-white text-[#242424] border-[#D3D3D3] hover:bg-[#F5F5F5]"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+              }
+              disabled={currentPage === totalPages}
+              className="h-9 px-4 border border-[#D3D3D3] bg-white text-[#242424] text-sm font-medium rounded-lg hover:bg-[#F5F5F5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </SurveyProLayout>
   );
 };

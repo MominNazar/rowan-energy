@@ -47,9 +47,9 @@ export const AdminLayout = ({
   const location = useLocation();
 
   return (
-    <div className="min-h-screen flex bg-[#EBEBEB]">
+    <div className="min-h-screen flex bg-[#EBEBEB] min-w-0 max-w-full">
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-60 bg-[#083F3C] flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-[min(15rem,85vw)] bg-[#083F3C] flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
@@ -86,12 +86,15 @@ export const AdminLayout = ({
                 key={item.to}
                 to={item.to}
                 onClick={() => setIsSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3 h-10 rounded-lg text-sm font-medium transition-colors ${
+                className={`relative flex items-center gap-3 px-3 h-10 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-[#0F5C56] text-[#37E49E]"
                     : "text-white/70 hover:bg-white/5 hover:text-white"
                 }`}
               >
+                {isActive && (
+                  <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-[#37E49E]" />
+                )}
                 <Icon size={17} />
                 {item.label}
               </Link>
@@ -132,8 +135,8 @@ export const AdminLayout = ({
         />
       )}
 
-      <div className="flex-1 flex flex-col min-w-0 lg:ml-60">
-        <header className="h-auto min-h-20 bg-white border-b border-[#E0E0E0] flex items-start gap-3 px-4 sm:px-6 py-3">
+      <div className="flex-1 flex flex-col min-w-0 max-w-full lg:ml-60">
+        <header className="h-auto min-h-16 sm:min-h-20 bg-white border-b border-[#E0E0E0] flex items-start gap-2 sm:gap-3 px-3 sm:px-6 py-3">
                   <button
                     type="button"
                     className="lg:hidden p-2 -ml-1 text-[#242424] hover:bg-[#F5F5F5] rounded-md transition-colors shrink-0 mt-0.5"
@@ -146,14 +149,14 @@ export const AdminLayout = ({
                   {header ? (
                     <div className="flex flex-1 flex-col justify-center gap-3 min-w-0">{header}</div>
                   ) : (
-            <div className="flex min-w-0 flex-1 items-center gap-3">
+            <div className="flex min-w-0 flex-1 items-start sm:items-center gap-3">
               {title && (
-                <div className="min-w-0">
-                  <h1 className="font-display text-[20px] font-semibold text-[#242424] truncate">
+                <div className="min-w-0 flex-1">
+                  <h1 className="font-display text-lg sm:text-[20px] font-semibold text-[#242424] leading-tight">
                     {title}
                   </h1>
                   {subtitle && (
-                    <p className="text-xs text-[#989898] mt-0.5 truncate">
+                    <p className="text-[11px] sm:text-xs text-[#989898] mt-0.5 leading-relaxed break-words">
                       {subtitle}
                     </p>
                   )}
@@ -162,37 +165,35 @@ export const AdminLayout = ({
             </div>
           )}
 
-          {!header && (
-            <div className="flex items-center gap-3">
-              {showNotification && !hideUser && (
+          {!hideUser && (
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              {showNotification && (
                 <button
                   type="button"
-                  className="relative w-10 h-10 rounded-lg border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors shrink-0"
+                  className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-[#E0E0E0] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors shrink-0"
                   aria-label="View notifications"
                 >
                   <Bell size={18} />
                   <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#EF4444] ring-2 ring-white" />
                 </button>
               )}
-              {!hideUser && (
-                <button
-                  type="button"
-                  className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg border border-transparent hover:bg-[#F5F5F5] transition-colors shrink-0"
-                >
-                  <div className="w-9 h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center">
-                    D
-                  </div>
-                  <span className="hidden sm:inline text-sm font-medium text-[#242424]">
-                    David
-                  </span>
-                  <ChevronDown size={14} className="hidden sm:block text-[#989898]" />
-                </button>
-              )}
+              <button
+                type="button"
+                className="flex items-center gap-2 pl-1 pr-1.5 sm:pr-2 py-1 rounded-lg border border-transparent hover:bg-[#F5F5F5] transition-colors shrink-0"
+              >
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#D1FAE5] text-[#0A3D3A] font-semibold text-sm flex items-center justify-center">
+                  D
+                </div>
+                <span className="hidden sm:inline text-sm font-medium text-[#242424]">
+                  David
+                </span>
+                <ChevronDown size={14} className="hidden sm:block text-[#989898]" />
+              </button>
             </div>
           )}
         </header>
 
-        <main className="flex-1 p-5 sm:p-6 overflow-auto">
+        <main className="flex-1 min-w-0 max-w-full p-3 sm:p-5 md:p-6 overflow-auto">
           {children}
         </main>
       </div>

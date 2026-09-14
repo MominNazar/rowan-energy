@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EngineerLayout } from "@/components/engineer/EngineerLayout";
+import { showSuccess, showError } from "@/utils/toast";
 
 const uploadFields = [
   {
@@ -71,8 +72,8 @@ const UploadField = ({
   const Icon = field.icon;
 
   return (
-    <div>
-      <label className="text-sm font-medium text-[#242424] mb-2 block">
+    <div className="min-w-0 w-full">
+      <label className="text-sm font-medium text-[#242424] mb-2 block break-words">
         <Icon size={15} className="inline mr-1.5 text-[#0A3D3A]" />
         {field.label}{" "}
         <span className={field.required ? "text-red-500" : "text-[#989898]"}>
@@ -83,13 +84,13 @@ const UploadField = ({
         onClick={() => inputRef.current?.click()}
         onDrop={(event) => onDrop(field.key, event)}
         onDragOver={onDragOver}
-        className="border-2 border-dashed border-[#D3D3D3] rounded-xl min-h-[9rem] sm:h-36 px-4 flex flex-col items-center justify-center gap-2 text-center hover:border-[#0A3D3A] transition-colors cursor-pointer"
+        className="border-2 border-dashed border-[#D3D3D3] rounded-xl min-h-[9rem] sm:h-36 px-3 sm:px-4 flex flex-col items-center justify-center gap-2 text-center hover:border-[#0A3D3A] transition-colors cursor-pointer min-w-0 w-full"
       >
         <Upload size={22} className="text-[#0A3D3A] shrink-0" />
-        <p className="text-[13px] leading-snug text-[#505050] sm:text-sm">
+        <p className="text-[13px] leading-snug text-[#505050] sm:text-sm px-1 break-words">
           Drag and drop files here or click to browse
         </p>
-        <p className="text-[11px] leading-snug text-[#989898] sm:text-xs">
+        <p className="text-[11px] leading-snug text-[#989898] sm:text-xs break-words">
           {field.supported}
         </p>
         <input
@@ -154,11 +155,13 @@ const EngineerUploadSurvey = () => {
 
   const handleSubmit = () => {
     if (!selectedFiles.thermal.length || !selectedFiles.rgb.length) {
-      alert("Please upload thermal imagery and RGB visual photos before submitting.");
+      showError(
+        "Please upload thermal imagery and RGB visual photos before submitting."
+      );
       return;
     }
 
-    alert(`Survey submitted with status: ${jobStatus}`);
+    showSuccess(`Survey submitted with status: ${jobStatus}`);
   };
 
   return (
@@ -166,18 +169,19 @@ const EngineerUploadSurvey = () => {
       title="Upload Survey Results"
       subtitle="Upload raw data and set job status"
       backTo="/engineer/job-details"
+      backLabel="Back to Job Details"
     >
-      <div className="max-w-[800px] mx-auto space-y-4">
+      <div className="max-w-[800px] mx-auto space-y-4 min-w-0 w-full">
         {/* Selected Job */}
-        <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
+        <div className="bg-white rounded-xl border border-[#E0E0E0] p-4 sm:p-6 min-w-0">
           <div className="flex items-center gap-2.5 mb-4">
-            <Folder size={18} className="text-[#0A3D3A]" />
+            <Folder size={18} className="text-[#0A3D3A] shrink-0" />
             <h2 className="font-display text-base font-semibold text-[#242424]">
               Selected Job
             </h2>
           </div>
-          <div className="border border-[#E0E0E0] rounded-lg p-4">
-            <h3 className="font-semibold text-[#242424]">
+          <div className="border border-[#E0E0E0] rounded-lg p-3 sm:p-4 min-w-0">
+            <h3 className="font-semibold text-[#242424] break-words">
               Job #1043 - Hightower Solar Farm
             </h3>
             <p className="text-sm text-[#505050] mt-1">
@@ -188,15 +192,15 @@ const EngineerUploadSurvey = () => {
         </div>
 
         {/* File Uploads */}
-        <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
+        <div className="bg-white rounded-xl border border-[#E0E0E0] p-4 sm:p-6 min-w-0">
           <div className="flex items-center gap-2.5 mb-4">
-            <Folder size={18} className="text-[#0A3D3A]" />
+            <Folder size={18} className="text-[#0A3D3A] shrink-0" />
             <h2 className="font-display text-base font-semibold text-[#242424]">
               File Uploads
             </h2>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-5 min-w-0">
             {uploadFields.map((field) => (
               <UploadField
                 key={field.key}
@@ -212,10 +216,10 @@ const EngineerUploadSurvey = () => {
         </div>
 
         {/* Job Status */}
-        <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
-          <div className="flex items-center gap-2.5 mb-4">
-            <CheckCircle2 size={18} className="text-[#0A3D3A]" />
-            <h2 className="font-display text-base font-semibold text-[#242424]">
+        <div className="bg-white rounded-xl border border-[#E0E0E0] p-4 sm:p-6 min-w-0">
+          <div className="flex items-center gap-2.5 mb-4 min-w-0">
+            <CheckCircle2 size={18} className="text-[#0A3D3A] shrink-0" />
+            <h2 className="font-display text-base font-semibold text-[#242424] break-words">
               Job Status <span className="text-red-500">*Required</span>
             </h2>
           </div>
@@ -234,7 +238,7 @@ const EngineerUploadSurvey = () => {
                     value={status}
                     checked={jobStatus === status}
                     onChange={() => setJobStatus(status)}
-                    className="w-4 h-4 accent-[#0A3D3A] cursor-pointer"
+                    className="w-4 h-4 shrink-0 accent-[#0A3D3A] cursor-pointer"
                   />
                   <span className="text-sm text-[#242424]">{status}</span>
                 </label>
@@ -244,10 +248,10 @@ const EngineerUploadSurvey = () => {
         </div>
 
         {/* Internal Notes */}
-        <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
-          <div className="flex items-center gap-2.5 mb-4">
-            <Flag size={18} className="text-[#0A3D3A]" />
-            <h2 className="font-display text-base font-semibold text-[#242424]">
+        <div className="bg-white rounded-xl border border-[#E0E0E0] p-4 sm:p-6 min-w-0">
+          <div className="flex items-center gap-2.5 mb-4 min-w-0">
+            <Flag size={18} className="text-[#0A3D3A] shrink-0" />
+            <h2 className="font-display text-base font-semibold text-[#242424] break-words">
               Internal Notes (Admin Only)
             </h2>
           </div>
@@ -256,15 +260,15 @@ const EngineerUploadSurvey = () => {
             onChange={(e) => setInternalNotes(e.target.value)}
             rows={4}
             placeholder="Add internal notes for admin team (not visible to customers)..."
-            className="w-full p-3 border border-[#D3D3D3] rounded-lg text-sm text-[#242424] placeholder:text-[#989898] focus-visible:ring-2 focus-visible:ring-[#0A3D3A] focus-visible:ring-offset-0 resize-none"
+            className="w-full min-w-0 p-3 border border-[#D3D3D3] rounded-lg text-sm text-[#242424] placeholder:text-[#989898] focus-visible:ring-2 focus-visible:ring-[#0A3D3A] focus-visible:ring-offset-0 resize-none"
           />
         </div>
 
         {/* Customer-Facing Summary */}
-        <div className="bg-white rounded-xl border border-[#E0E0E0] p-5 sm:p-6">
-          <div className="flex items-center gap-2.5 mb-4">
-            <FileText size={18} className="text-[#0A3D3A]" />
-            <h2 className="font-display text-base font-semibold text-[#242424]">
+        <div className="bg-white rounded-xl border border-[#E0E0E0] p-4 sm:p-6 min-w-0">
+          <div className="flex items-center gap-2.5 mb-4 min-w-0">
+            <FileText size={18} className="text-[#0A3D3A] shrink-0" />
+            <h2 className="font-display text-base font-semibold text-[#242424] break-words">
               Customer-Facing Summary (Optional)
             </h2>
           </div>
@@ -273,17 +277,17 @@ const EngineerUploadSurvey = () => {
             onChange={(e) => setCustomerSummary(e.target.value)}
             rows={4}
             placeholder="Brief summary for customer (e.g., 'Survey completed successfully. No major obstructions.')"
-            className="w-full p-3 border border-[#D3D3D3] rounded-lg text-sm text-[#242424] placeholder:text-[#989898] focus-visible:ring-2 focus-visible:ring-[#0A3D3A] focus-visible:ring-offset-0 resize-none"
+            className="w-full min-w-0 p-3 border border-[#D3D3D3] rounded-lg text-sm text-[#242424] placeholder:text-[#989898] focus-visible:ring-2 focus-visible:ring-[#0A3D3A] focus-visible:ring-offset-0 resize-none"
           />
         </div>
 
         {/* Submit */}
-        <div className="flex justify-end pt-2">
+        <div className="flex justify-stretch sm:justify-end pt-2 min-w-0">
           <Button
             onClick={handleSubmit}
-            className="h-11 px-6 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold"
+            className="h-11 w-full sm:w-auto px-6 bg-[#0A3D3A] hover:bg-[#0A3D3A]/90 text-white rounded-lg text-sm font-semibold"
           >
-            <Check size={16} className="mr-2" />
+            <Check size={16} className="mr-2 shrink-0" />
             Submit &amp; Mark Complete
           </Button>
         </div>

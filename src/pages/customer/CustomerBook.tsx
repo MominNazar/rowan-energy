@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Phone,
   MessageSquare,
@@ -15,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SurveyProLayout } from "@/components/layout/SurveyProLayout";
+import { showSuccess, showError } from "@/utils/toast";
 
 const assetTypes = [
   { label: "Solar", desc: "Solar panels & farms", value: "solar" },
@@ -32,6 +34,7 @@ const purposes = [
 ];
 
 const CustomerBook = () => {
+  const navigate = useNavigate();
   const [assetType, setAssetType] = useState("solar");
   const [siteAccess, setSiteAccess] = useState("gated");
   const [selectedPurposes, setSelectedPurposes] = useState<string[]>([
@@ -40,10 +43,77 @@ const CustomerBook = () => {
   ]);
   const [showForm, setShowForm] = useState(true);
 
+  const [siteName, setSiteName] = useState("");
+  const [systemSize, setSystemSize] = useState("");
+  const [location, setLocation] = useState("");
+  const [preferredDate, setPreferredDate] = useState("");
+  const [flexibleTiming, setFlexibleTiming] = useState(false);
+  const [gateCode, setGateCode] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactRole, setContactRole] = useState("");
+  const [notes, setNotes] = useState("");
+
   const togglePurpose = (p: string) => {
     setSelectedPurposes((prev) =>
       prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]
     );
+  };
+
+  const handleFlexibleTiming = () => {
+    setFlexibleTiming((prev) => {
+      const next = !prev;
+      if (next) setPreferredDate("");
+      return next;
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (
+      !siteName.trim() ||
+      !location.trim() ||
+      !contactName.trim() ||
+      !contactPhone.trim()
+    ) {
+      showError("Please fill in all required fields");
+      return;
+    }
+
+    const booking = {
+      id: `booking-${Date.now()}`,
+      siteName: siteName.trim(),
+      systemSize: systemSize.trim(),
+      location: location.trim(),
+      date: flexibleTiming ? "Flexible" : preferredDate || "TBD",
+      preferredDate: flexibleTiming ? "" : preferredDate,
+      flexibleTiming,
+      status: "Scheduled",
+      assetType,
+      siteAccess,
+      gateCode: gateCode.trim(),
+      contactName: contactName.trim(),
+      contactPhone: contactPhone.trim(),
+      contactRole: contactRole.trim(),
+      purposes: selectedPurposes,
+      notes: notes.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      const existing = JSON.parse(
+        localStorage.getItem("customerBookings") || "[]"
+      );
+      const bookings = Array.isArray(existing) ? existing : [];
+      bookings.push(booking);
+      localStorage.setItem("customerBookings", JSON.stringify(bookings));
+    } catch {
+      localStorage.setItem("customerBookings", JSON.stringify([booking]));
+    }
+
+    showSuccess("Booking request submitted");
+    navigate("/customer/bookings");
   };
 
   return (
@@ -68,7 +138,12 @@ const CustomerBook = () => {
             <p className="font-semibold text-[#242424] text-sm">+44 123 456 7890</p>
             <p className="text-xs text-[#989898] mt-0.5">Available 24/7 for instant booking</p>
           </div>
-          <Button className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
+          <Button
+            onClick={() => {
+              window.location.href = "tel:+441234567890";
+            }}
+            className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
+          >
             <Phone size={15} className="mr-2" />
             Call Now
           </Button>
@@ -92,7 +167,10 @@ const CustomerBook = () => {
             </div>
             <p className="text-xs text-[#989898]">Quick & interactive booking</p>
           </div>
-          <Button className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
+          <Button
+            onClick={() => showSuccess("Opening chat assistant (demo)")}
+            className="mt-auto w-full h-10 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
+          >
             <MessageSquare size={15} className="mr-2" />
             Start Chat
           </Button>
@@ -146,7 +224,7 @@ const CustomerBook = () => {
             </button>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Type of Asset */}
             <div>
               <Label className="text-sm font-semibold text-[#242424] mb-3 block">
@@ -197,6 +275,8 @@ const CustomerBook = () => {
                   <span className="text-xs text-[#505050] font-medium">Site Name</span>
                   <Input
                     placeholder="Enter site name"
+                    value={siteName}
+                    onChange={(e) => setSiteName(e.target.value)}
                     className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
                   />
                 </div>
@@ -204,6 +284,8 @@ const CustomerBook = () => {
                   <span className="text-xs text-[#505050] font-medium">System Size</span>
                   <Input
                     placeholder="e.g., 5MW or 100 panels"
+                    value={systemSize}
+                    onChange={(e) => setSystemSize(e.target.value)}
                     className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
                   />
                 </div>
@@ -218,6 +300,8 @@ const CustomerBook = () => {
               </Label>
               <Input
                 placeholder="Address or GPS coordinates"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
               />
             </div>
@@ -234,12 +318,20 @@ const CustomerBook = () => {
                   <div className="relative flex-1">
                     <Input
                       type="date"
-                      className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C] w-full"
+                      value={preferredDate}
+                      onChange={(e) => setPreferredDate(e.target.value)}
+                      disabled={flexibleTiming}
+                      className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C] w-full disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                   <button
                     type="button"
-                    className="h-11 px-4 border border-[#D3D3D3] rounded-lg text-sm text-[#505050] hover:bg-[#EAEAEA] transition-colors whitespace-nowrap"
+                    onClick={handleFlexibleTiming}
+                    className={`h-11 px-4 border rounded-lg text-sm transition-colors whitespace-nowrap ${
+                      flexibleTiming
+                        ? "border-[#083F3C] bg-[#F0FDF9] text-[#083F3C]"
+                        : "border-[#D3D3D3] text-[#505050] hover:bg-[#EAEAEA]"
+                    }`}
                   >
                     I'm flexible with timing
                   </button>
@@ -276,6 +368,8 @@ const CustomerBook = () => {
               </div>
               <Input
                 placeholder="Gate code or access instructions (if applicable)"
+                value={gateCode}
+                onChange={(e) => setGateCode(e.target.value)}
                 className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
               />
             </div>
@@ -291,6 +385,8 @@ const CustomerBook = () => {
                   <span className="text-xs text-[#505050] font-medium">Contact Name</span>
                   <Input
                     placeholder="Full name"
+                    value={contactName}
+                    onChange={(e) => setContactName(e.target.value)}
                     className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
                   />
                 </div>
@@ -298,6 +394,8 @@ const CustomerBook = () => {
                   <span className="text-xs text-[#505050] font-medium">Phone Number</span>
                   <Input
                     placeholder="+44 123 456 7890"
+                    value={contactPhone}
+                    onChange={(e) => setContactPhone(e.target.value)}
                     className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
                   />
                 </div>
@@ -305,6 +403,8 @@ const CustomerBook = () => {
                   <span className="text-xs text-[#505050] font-medium">Role</span>
                   <Input
                     placeholder="Site manager, etc."
+                    value={contactRole}
+                    onChange={(e) => setContactRole(e.target.value)}
                     className="h-11 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C]"
                   />
                 </div>
@@ -356,6 +456,8 @@ const CustomerBook = () => {
               <textarea
                 rows={4}
                 placeholder="PPE requirements, safety induction, special access instructions, or any other important details..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
                 className="w-full h-auto min-h-[100px] p-3 border border-[#D3D3D3] rounded-lg text-sm text-[#242424] placeholder:text-[#989898] focus-visible:ring-2 focus-visible:ring-[#083F3C] focus-visible:ring-offset-0 resize-none"
               />
             </div>

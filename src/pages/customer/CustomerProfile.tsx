@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   User,
   Lock,
@@ -6,25 +6,91 @@ import {
   Info,
   X,
   MapPin,
-  Phone,
   Link2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SurveyProLayout } from "@/components/layout/SurveyProLayout";
+import { showSuccess, showError } from "@/utils/toast";
+
+const PROFILE_KEY = "customerProfile";
+const GOOGLE_KEY = "customerGoogleConnected";
+
+const defaultProfile = {
+  fullName: "John Smith",
+  email: "john.smith@company.com",
+  phone: "+44 123 456 7890",
+  company: "Renewable Energy Solutions Ltd",
+};
 
 const CustomerProfile = () => {
-  const [fullName, setFullName] = useState("John Smith");
-  const [email, setEmail] = useState("john.smith@company.com");
-  const [phone, setPhone] = useState("+44 123 456 7890");
-  const [company, setCompany] = useState("Renewable Energy Solutions Ltd");
+  const [fullName, setFullName] = useState(defaultProfile.fullName);
+  const [email, setEmail] = useState(defaultProfile.email);
+  const [phone, setPhone] = useState(defaultProfile.phone);
+  const [company, setCompany] = useState(defaultProfile.company);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [googleConnected, setGoogleConnected] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(PROFILE_KEY);
+      if (saved) {
+        const profile = JSON.parse(saved);
+        if (profile.fullName) setFullName(profile.fullName);
+        if (profile.email) setEmail(profile.email);
+        if (profile.phone) setPhone(profile.phone);
+        if (profile.company) setCompany(profile.company);
+      }
+    } catch {
+      // ignore corrupt profile data
+    }
+
+    setGoogleConnected(localStorage.getItem(GOOGLE_KEY) === "true");
+  }, []);
+
+  const handleSaveProfile = () => {
+    localStorage.setItem(
+      PROFILE_KEY,
+      JSON.stringify({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        company: company.trim(),
+      })
+    );
+    showSuccess("Profile saved");
+  };
+
+  const handleUpdatePassword = () => {
+    if (newPassword !== confirmPassword) {
+      showError("New password and confirmation do not match");
+      return;
+    }
+    if (newPassword.length < 6) {
+      showError("Password must be at least 6 characters");
+      return;
+    }
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    showSuccess("Password updated (demo)");
+  };
+
+  const handleGoogleToggle = () => {
+    const next = !googleConnected;
+    setGoogleConnected(next);
+    localStorage.setItem(GOOGLE_KEY, String(next));
+    showSuccess(
+      next
+        ? "Google Calendar connected (demo)"
+        : "Google Calendar disconnected (demo)"
+    );
+  };
 
   return (
     <SurveyProLayout
@@ -95,7 +161,10 @@ const CustomerProfile = () => {
         </div>
 
         <div className="flex justify-center sm:justify-end mt-6">
-          <Button className="h-10 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
+          <Button
+            onClick={handleSaveProfile}
+            className="h-10 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
+          >
             Save Changes
           </Button>
         </div>
@@ -157,7 +226,10 @@ const CustomerProfile = () => {
             </div>
           </div>
           <div className="flex justify-center sm:justify-end">
-            <Button className="h-10 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold">
+            <Button
+              onClick={handleUpdatePassword}
+              className="h-10 px-5 bg-[#083F3C] hover:bg-[#083F3C]/90 text-white rounded-lg text-sm font-semibold"
+            >
               <Lock size={15} className="mr-2" />
               Update Password
             </Button>
@@ -216,7 +288,7 @@ const CustomerProfile = () => {
             </div>
           </div>
           <Button
-            onClick={() => setGoogleConnected(!googleConnected)}
+            onClick={handleGoogleToggle}
             className={`h-10 px-4 rounded-lg text-sm font-semibold whitespace-nowrap ${
               googleConnected
                 ? "bg-[#EAEAEA] text-[#242424] hover:bg-[#D3D3D3]"

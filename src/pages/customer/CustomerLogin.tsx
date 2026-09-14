@@ -1,18 +1,38 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { showSuccess, showError } from "@/utils/toast";
 
 const CustomerLogin = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock login - navigate to dashboard
-    window.location.href = "/customer/dashboard";
+
+    if (!email.trim() || !password.trim()) {
+      showError("Please enter both email and password");
+      return;
+    }
+
+    const session = JSON.stringify({
+      email: email.trim(),
+      loggedInAt: new Date().toISOString(),
+    });
+
+    if (rememberMe) {
+      localStorage.setItem("customerAuth", session);
+      sessionStorage.removeItem("customerAuth");
+    } else {
+      sessionStorage.setItem("customerAuth", session);
+      localStorage.removeItem("customerAuth");
+    }
+
+    navigate("/customer/dashboard");
   };
 
   return (
@@ -44,7 +64,6 @@ const CustomerLogin = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="h-11 border-border focus-visible:ring-primary"
-              required
             />
           </div>
 
@@ -59,7 +78,6 @@ const CustomerLogin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="h-11 border-border focus-visible:ring-primary"
-              required
             />
           </div>
 
@@ -73,9 +91,13 @@ const CustomerLogin = () => {
               />
               Remember me
             </label>
-            <a href="#" className="text-primary font-medium hover:underline">
+            <button
+              type="button"
+              onClick={() => showSuccess("Password reset link sent (demo)")}
+              className="text-primary font-medium hover:underline"
+            >
               Forgot password?
-            </a>
+            </button>
           </div>
 
           <Button
@@ -88,9 +110,13 @@ const CustomerLogin = () => {
 
         <div className="mt-8 pt-6 border-t border-border text-center text-sm text-[#989898]">
           Don't have an account?{" "}
-          <a href="#" className="text-[#242424] font-semibold hover:underline">
+          <button
+            type="button"
+            onClick={() => showSuccess("Account creation coming soon (demo)")}
+            className="text-[#242424] font-semibold hover:underline"
+          >
             Create an account
-          </a>
+          </button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -13,6 +13,7 @@ import {
   X,
   Layers,
 } from "lucide-react";
+import { showSuccess } from "@/utils/toast";
 
 interface SurveyProLayoutProps {
   children: React.ReactNode;
@@ -29,6 +30,19 @@ const navItems = [
   { label: "My Profile", icon: User, to: "/customer/profile" },
 ];
 
+const mockNotifications = [
+  {
+    id: "1",
+    title: "Survey reminder",
+    body: "Downtown Office Complex is scheduled for March 15.",
+  },
+  {
+    id: "2",
+    title: "Report ready",
+    body: "Tech Park Building A report is available to download.",
+  },
+];
+
 export const SurveyProLayout = ({
   children,
   title,
@@ -36,6 +50,8 @@ export const SurveyProLayout = ({
   backTo,
 }: SurveyProLayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const notificationsRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -52,11 +68,43 @@ export const SurveyProLayout = ({
     return location.pathname === to;
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target as Node)
+      ) {
+        setNotificationsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    localStorage.removeItem("customerAuth");
+    sessionStorage.removeItem("customerAuth");
+    setIsSidebarOpen(false);
+    navigate("/customer/login");
+    showSuccess("Logged out");
+  };
+
+  const handleBellClick = () => {
+    setNotificationsOpen((open) => {
+      const next = !open;
+      if (next && mockNotifications.length === 0) {
+        showSuccess("No new notifications");
+      }
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen flex bg-[#EAEAEA] font-body text-[#242424]">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-[260px] bg-[#083F3C] text-white flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-[min(260px,85vw)] bg-[#083F3C] text-white flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
       >
@@ -112,14 +160,14 @@ export const SurveyProLayout = ({
 
         {/* Logout */}
         <div className="p-4 border-t border-white/10">
-          <Link
-            to="/customer/login"
-            onClick={() => setIsSidebarOpen(false)}
-            className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 transition-colors"
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 transition-colors"
           >
             <LogOut size={18} className="text-white/70" />
             <span>Logout</span>
-          </Link>
+          </button>
         </div>
       </aside>
 
@@ -133,11 +181,11 @@ export const SurveyProLayout = ({
       )}
 
       {/* Main Container */}
-      <div className="flex-1 lg:ml-[260px] flex flex-col min-w-0">
+      <div className="flex-1 lg:ml-[260px] flex flex-col min-w-0 max-w-full">
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 min-h-[76px] bg-white border-b border-[#D3D3D3] flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 gap-3">
+        <header className="sticky top-0 z-30 min-h-[76px] bg-white border-b border-[#D3D3D3] flex items-center justify-between px-3 sm:px-6 lg:px-8 py-3 gap-2 sm:gap-3 min-w-0 max-w-full">
           {/* Left Title / Back & Mobile hamburger */}
-          <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <button
               type="button"
               className="lg:hidden p-2 -ml-1 text-[#242424] hover:bg-[#EAEAEA] rounded-md transition-colors shrink-0"
@@ -158,9 +206,9 @@ export const SurveyProLayout = ({
               </button>
             )}
 
-            <div className="min-w-0">
+            <div className="min-w-0 max-w-full">
               {title && (
-                <h1 className="font-display text-lg sm:text-xl md:text-2xl font-semibold text-[#242424] leading-tight truncate">
+                <h1 className="font-display text-base sm:text-xl md:text-2xl font-semibold text-[#242424] leading-tight truncate">
                   {title}
                 </h1>
               )}
@@ -173,15 +221,37 @@ export const SurveyProLayout = ({
           </div>
 
           {/* Right actions: Notifications & User Avatar */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <button
-              type="button"
-              className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#D3D3D3] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors"
-              aria-label="View notifications"
-            >
-              <Bell size={18} />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#37E49E] ring-2 ring-white" />
-            </button>
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="relative" ref={notificationsRef}>
+              <button
+                type="button"
+                className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#D3D3D3] bg-white flex items-center justify-center text-[#505050] hover:text-[#242424] hover:border-[#989898] transition-colors"
+                aria-label="View notifications"
+                aria-expanded={notificationsOpen}
+                onClick={handleBellClick}
+              >
+                <Bell size={18} />
+                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#37E49E] ring-2 ring-white" />
+              </button>
+              {notificationsOpen && (
+                <div className="absolute right-0 mt-2 w-72 sm:w-80 rounded-xl border border-[#D3D3D3] bg-white shadow-lg z-50 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[#D3D3D3]">
+                    <p className="text-sm font-semibold text-[#242424]">Notifications</p>
+                  </div>
+                  <ul className="max-h-64 overflow-y-auto">
+                    {mockNotifications.map((n) => (
+                      <li
+                        key={n.id}
+                        className="px-4 py-3 border-b border-[#EAEAEA] last:border-b-0 hover:bg-[#F5F5F5]"
+                      >
+                        <p className="text-sm font-medium text-[#242424]">{n.title}</p>
+                        <p className="text-xs text-[#505050] mt-0.5">{n.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
             <Link
               to="/customer/profile"
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#D1FAE5] text-[#083F3C] font-semibold text-xs sm:text-sm flex items-center justify-center hover:opacity-90 transition-opacity"
@@ -193,7 +263,7 @@ export const SurveyProLayout = ({
         </header>
 
         {/* Body content */}
-        <main className="flex-1 w-full max-w-[1440px] mx-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 w-full min-w-0 max-w-[1440px] mx-auto p-3 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>

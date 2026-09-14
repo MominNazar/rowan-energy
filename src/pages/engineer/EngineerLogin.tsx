@@ -1,26 +1,49 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Layers, LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { showSuccess, showError } from "@/utils/toast";
 
 const EngineerLogin = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock login - navigate to engineer dashboard
-    window.location.href = "/engineer/dashboard";
+
+    if (!email.trim() || !password.trim()) {
+      showError("Please enter both email and password");
+      return;
+    }
+
+    const session = JSON.stringify({
+      email: email.trim(),
+      loggedInAt: new Date().toISOString(),
+    });
+
+    if (rememberMe) {
+      localStorage.setItem("engineerAuth", session);
+      sessionStorage.removeItem("engineerAuth");
+    } else {
+      sessionStorage.setItem("engineerAuth", session);
+      localStorage.removeItem("engineerAuth");
+    }
+
+    showSuccess("Logged in successfully");
+    navigate("/engineer/dashboard");
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row min-w-0 w-full">
       {/* Left Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center bg-white p-6 sm:p-8 lg:p-12">
-        <div className="w-full max-w-[420px]">
+      <div className="flex-1 flex items-center justify-center bg-white p-4 sm:p-8 lg:p-12 min-w-0 w-full">
+        <div className="w-full max-w-[420px] min-w-0">
           {/* Logo */}
-          <div className="flex items-center gap-2.5 mb-10">
-            <div className="w-9 h-9 rounded-lg bg-[#083F3C] flex items-center justify-center">
+          <div className="flex items-center gap-2.5 mb-8 sm:mb-10">
+            <div className="w-9 h-9 rounded-lg bg-[#083F3C] flex items-center justify-center shrink-0">
               <Layers size={20} className="text-white" />
             </div>
             <span className="font-display text-[22px] font-semibold text-[#242424] tracking-tight">
@@ -29,7 +52,7 @@ const EngineerLogin = () => {
           </div>
 
           {/* Title & Subtitle */}
-          <h1 className="font-display text-[32px] sm:text-[38px] font-bold text-[#242424] leading-tight mb-2">
+          <h1 className="font-display text-[28px] sm:text-[38px] font-bold text-[#242424] leading-tight mb-2 break-words">
             Engineer Login
           </h1>
           <p className="text-sm text-[#505050] mb-8">
@@ -37,8 +60,8 @@ const EngineerLogin = () => {
           </p>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-5 w-full min-w-0">
+            <div className="space-y-2 min-w-0">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-[#242424]"
@@ -51,12 +74,12 @@ const EngineerLogin = () => {
                 placeholder="your.email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C] focus-visible:ring-offset-0"
+                className="h-12 w-full border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C] focus-visible:ring-offset-0"
                 required
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 min-w-0">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-[#242424]"
@@ -69,10 +92,20 @@ const EngineerLogin = () => {
                 placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-12 border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C] focus-visible:ring-offset-0"
+                className="h-12 w-full border-[#D3D3D3] rounded-lg text-sm focus-visible:ring-[#083F3C] focus-visible:ring-offset-0"
                 required
               />
             </div>
+
+            <label className="flex items-center gap-2 text-sm text-[#505050] cursor-pointer">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 shrink-0 rounded border-[#D3D3D3] accent-[#083F3C] cursor-pointer"
+              />
+              Remember me
+            </label>
 
             <Button
               type="submit"
@@ -84,13 +117,21 @@ const EngineerLogin = () => {
           </form>
 
           {/* Footer Links */}
-          <div className="flex items-center justify-between mt-6 text-sm">
-            <a href="#" className="text-[#505050] hover:text-[#242424] hover:underline">
+          <div className="flex flex-wrap items-center justify-between gap-2 mt-6 text-sm">
+            <button
+              type="button"
+              onClick={() => showSuccess("Password reset link sent (demo)")}
+              className="text-[#505050] hover:text-[#242424] hover:underline"
+            >
               Forgot password?
-            </a>
-            <a href="#" className="text-[#505050] hover:text-[#242424] hover:underline">
+            </button>
+            <button
+              type="button"
+              onClick={() => showSuccess("Account creation coming soon (demo)")}
+              className="text-[#505050] hover:text-[#242424] hover:underline"
+            >
               Create account
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -102,7 +143,6 @@ const EngineerLogin = () => {
           alt="Drone flying over forest"
           className="w-full h-full object-cover"
         />
-        {/* Optional overlay for better contrast if needed */}
       </div>
     </div>
   );

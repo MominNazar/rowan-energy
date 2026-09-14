@@ -1,17 +1,16 @@
+import { Link } from "react-router-dom";
 import {
-  Briefcase,
   CalendarDays,
   CheckCircle2,
   ChevronRight,
-  Clock,
   Home,
-  MapPin,
   MoreHorizontal,
   Users,
 } from "lucide-react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { showSuccess } from "@/utils/toast";
 
 const stats = [
   { label: "Leads Today", value: "12", change: "+2 from yesterday", positive: true, icon: Home },
@@ -21,11 +20,11 @@ const stats = [
 ];
 
 const todayJobs = [
-  { id: "1", title: "Hightower Solar Farm", region: "North England", time: "09:00 - 10:30 AM", engineer: "Alex Khan", status: "In Progress" },
-  { id: "2", title: "GreenTech Office", region: "West Midlands", time: "10:00 - 11:45 AM", engineer: "Fatima Patel", status: "Completed" },
-  { id: "3", title: "Riverside Panels", region: "South England", time: "12:30 - 14:00 PM", engineer: "Owen Williams", status: "Scheduled" },
-  { id: "4", title: "Leeds City Hall", region: "North England", time: "15:00 - 17:00 PM", engineer: "Alex Khan", status: "Scheduled" },
-  { id: "5", title: "Sunnyvale Residences", region: "East Midlands", time: "16:30 - 18:00 PM", engineer: "Fatima Patel", status: "Running Late" },
+  { id: "1052", title: "Hightower Solar Farm", region: "North England", time: "09:00 - 10:30 AM", engineer: "Alex Khan", status: "In Progress" },
+  { id: "1051", title: "GreenTech Office", region: "West Midlands", time: "10:00 - 11:45 AM", engineer: "Fatima Patel", status: "Completed" },
+  { id: "1050", title: "Riverside Panels", region: "South England", time: "12:30 - 14:00 PM", engineer: "Owen Williams", status: "Scheduled" },
+  { id: "1049", title: "Leeds City Hall", region: "North England", time: "15:00 - 17:00 PM", engineer: "Alex Khan", status: "Scheduled" },
+  { id: "1048", title: "Sunnyvale Residences", region: "East Midlands", time: "16:30 - 18:00 PM", engineer: "Fatima Patel", status: "Running Late" },
 ];
 
 const funnel = [
@@ -70,7 +69,12 @@ const AdminDashboard = () => {
                   {s.positive ? "↑" : "↓"} {s.change}
                 </p>
                 <div className="h-1 bg-[#EAEAEA] rounded-full mt-3 overflow-hidden">
-                  <div className="h-full bg-[#0A3D3A] rounded-full" style={{ width: `${Math.min(s.value === "12" ? 80 : s.value === "8" ? 60 : s.value === "5" ? 70 : 50, 100)}%` }} />
+                  <div
+                    className="h-full bg-[#0A3D3A] rounded-full"
+                    style={{
+                      width: `${Math.min(s.value === "12" ? 80 : s.value === "8" ? 60 : s.value === "5" ? 70 : 50, 100)}%`,
+                    }}
+                  />
                 </div>
               </div>
             );
@@ -82,14 +86,23 @@ const AdminDashboard = () => {
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display text-base font-semibold text-[#242424]">Today&apos;s Jobs</h2>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-[#989898] hover:text-[#242424]">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-[#989898] hover:text-[#242424]"
+                  onClick={() => showSuccess("More options")}
+                >
                   <MoreHorizontal size={16} />
                 </Button>
               </div>
             </div>
             <div className="space-y-3">
               {todayJobs.map((job) => (
-                <div key={job.id} className="rounded-lg border border-[#E0E0E0] p-3 hover:border-[#0A3D3A] transition-colors">
+                <Link
+                  key={job.id}
+                  to={`/admin/jobs/${job.id}`}
+                  className="block rounded-lg border border-[#E0E0E0] p-3 hover:border-[#0A3D3A] transition-colors"
+                >
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="font-medium text-[#242424] text-sm">{job.title}</h3>
                     <Badge
@@ -97,10 +110,10 @@ const AdminDashboard = () => {
                         job.status === "Completed"
                           ? "bg-[#E8F6F3] text-[#0A3D3A]"
                           : job.status === "In Progress"
-                          ? "bg-[#FEF3C7] text-[#92400E]"
-                          : job.status === "Running Late"
-                          ? "bg-[#FEE2E2] text-[#DC2626]"
-                          : "bg-[#E8F6F3] text-[#0A3D3A]"
+                            ? "bg-[#FEF3C7] text-[#92400E]"
+                            : job.status === "Running Late"
+                              ? "bg-[#FEE2E2] text-[#DC2626]"
+                              : "bg-[#E8F6F3] text-[#0A3D3A]"
                       }`}
                     >
                       {job.status}
@@ -111,18 +124,29 @@ const AdminDashboard = () => {
                     <span className="text-xs text-[#505050]">{job.time}</span>
                     <span className="text-xs text-[#505050]">{job.engineer}</span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
-            <Button variant="outline" className="w-full mt-4 h-10 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-sm font-semibold">
-              View All Jobs <ChevronRight size={14} className="ml-1" />
+            <Button
+              variant="outline"
+              className="w-full mt-4 h-10 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#E8F6F3] rounded-lg text-sm font-semibold"
+              asChild
+            >
+              <Link to="/admin/jobs">
+                View All Jobs <ChevronRight size={14} className="ml-1" />
+              </Link>
             </Button>
           </div>
 
           <div className="bg-white rounded-xl border border-[#E0E0E0] p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display text-base font-semibold text-[#242424]">Lead Funnel Overview</h2>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[#989898] hover:text-[#242424]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[#989898] hover:text-[#242424]"
+                onClick={() => showSuccess("More options")}
+              >
                 <MoreHorizontal size={16} />
               </Button>
             </div>
@@ -130,8 +154,19 @@ const AdminDashboard = () => {
             <div className="flex items-center justify-center mb-4">
               <div className="relative w-40 h-40">
                 <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#EAEAEA" strokeWidth="4" />
-                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#37E49E" strokeWidth="4" strokeDasharray="65, 100" />
+                  <path
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="#EAEAEA"
+                    strokeWidth="4"
+                  />
+                  <path
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="#37E49E"
+                    strokeWidth="4"
+                    strokeDasharray="65, 100"
+                  />
                 </svg>
               </div>
             </div>
@@ -161,7 +196,12 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl border border-[#E0E0E0] p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display text-base font-semibold text-[#242424]">Engineer Workload Snapshot</h2>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-[#989898] hover:text-[#242424]">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-[#989898] hover:text-[#242424]"
+                onClick={() => showSuccess("More options")}
+              >
                 <MoreHorizontal size={16} />
               </Button>
             </div>
@@ -176,14 +216,34 @@ const AdminDashboard = () => {
                       <div>
                         <p className="text-sm font-medium text-[#242424]">{w.name}</p>
                         <div className="flex items-center gap-1 mt-0.5">
-                          <span className={`w-1.5 h-1.5 rounded-full ${w.status === "Fully Loaded" ? "bg-[#EF4444]" : "bg-[#37E49E]"}`} />
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              w.status === "Fully Loaded" ? "bg-[#EF4444]" : "bg-[#37E49E]"
+                            }`}
+                          />
                           <span className="text-[10px] text-[#505050]">{w.status}</span>
                         </div>
                       </div>
                     </div>
-                    <Button variant="ghost" size="sm" className="h-7 px-2 text-xs text-[#0A3D3A] hover:bg-[#E8F6F3]">
-                      {w.jobs > 0 ? "View Route" : "+ Assign Job"}
-                    </Button>
+                    {w.jobs > 0 ? (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2 text-xs text-[#0A3D3A] hover:bg-[#E8F6F3]"
+                        asChild
+                      >
+                        <Link to="/admin/route-planner">View Route</Link>
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2 text-xs text-[#0A3D3A] hover:bg-[#E8F6F3]"
+                        asChild
+                      >
+                        <Link to="/admin/jobs">+ Assign Job</Link>
+                      </Button>
+                    )}
                   </div>
                   <div className="flex items-center justify-between mt-3 text-xs">
                     <span className="text-[#505050]">Jobs Today</span>

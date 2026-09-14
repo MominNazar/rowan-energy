@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CustomerLogin from "./pages/customer/CustomerLogin";
@@ -40,6 +40,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/customer" element={<Navigate to="/customer/dashboard" replace />} />
           <Route path="/customer/login" element={<CustomerLogin />} />
           <Route path="/customer/dashboard" element={<CustomerDashboard />} />
           <Route path="/customer/bookings" element={<CustomerBookings />} />
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/customer/reports" element={<CustomerReports />} />
           <Route path="/customer/book" element={<CustomerBook />} />
           <Route path="/customer/profile" element={<CustomerProfile />} />
+          <Route path="/engineer" element={<Navigate to="/engineer/dashboard" replace />} />
           <Route path="/engineer/login" element={<EngineerLogin />} />
           <Route path="/engineer/dashboard" element={<EngineerDashboard />} />
           <Route path="/engineer/schedule" element={<EngineerSchedule />} />
