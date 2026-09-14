@@ -230,32 +230,70 @@ const EngineerRoutePlanner = () => {
         <div className="flex flex-col xl:flex-row gap-3.5 sm:gap-4 min-w-0">
           {/* Map Panel */}
           <div className="relative flex-1 min-h-[360px] sm:min-h-[420px] xl:min-h-[560px] rounded-xl overflow-hidden border border-[#E0E0E0] bg-[#E9F9DC] order-1">
+            {/* Zoomable map layer — grid, route, markers, start/end scale together */}
             <div
-              className="absolute inset-0 opacity-70 transition-transform origin-center"
+              className="absolute inset-0 transition-transform duration-200 ease-out origin-center will-change-transform"
               style={{ transform: `scale(${zoom})` }}
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(10,61,58,0.08)_1px,transparent_0)] bg-[size:28px_28px]" />
+              <div className="absolute inset-0 opacity-70">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(10,61,58,0.08)_1px,transparent_0)] bg-[size:28px_28px]" />
+              </div>
+
+              {showLayers && (
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M 10 75 Q 20 55 25 35 Q 35 25 50 42 Q 60 50 70 52 Q 78 60 85 72"
+                    fill="none"
+                    stroke="#0A3D3A"
+                    strokeWidth="0.35"
+                    strokeDasharray="1.2,1.2"
+                    opacity="0.65"
+                  />
+                </svg>
+              )}
+
+              {/* Start / End */}
+              <div className="absolute left-2 sm:left-3 bottom-[22%]">
+                <div className="flex items-center gap-1 bg-white rounded-md px-2 py-1 shadow-sm border border-[#E0E0E0]">
+                  <Play size={10} className="text-[#242424] fill-[#242424]" />
+                  <span className="text-xs font-medium text-[#242424]">Start</span>
+                </div>
+                <div className="w-2 h-2 rounded-full bg-[#242424] mt-1 ml-1" />
+              </div>
+              <div className="absolute right-2 sm:right-3 bottom-[22%]">
+                <div className="flex items-center gap-1 bg-white rounded-md px-2 py-1 shadow-sm border border-[#E0E0E0]">
+                  <Flag size={10} className="text-[#242424]" />
+                  <span className="text-xs font-medium text-[#242424]">End</span>
+                </div>
+                <div className="w-2 h-2 rounded-full bg-[#242424] mt-1 ml-1" />
+              </div>
+
+              {/* Job markers from filtered data */}
+              {filteredJobs.map((job, idx) => (
+                <div
+                  key={job.id}
+                  className={`absolute ${job.mapPos} max-w-[46vw] sm:max-w-none`}
+                >
+                  <div className="bg-[#0A3D3A] text-white text-xs font-medium rounded-lg px-2.5 sm:px-3 py-2 shadow-lg">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold shrink-0">
+                        {idx + 1}
+                      </span>
+                      <span className="truncate">{job.shortTitle}</span>
+                    </div>
+                    <div className="text-[10px] text-white/70 font-normal mt-0.5 pl-7">
+                      {job.time}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {showLayers && (
-              <svg
-                className="absolute inset-0 w-full h-full pointer-events-none z-0"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                style={{ transform: `scale(${zoom})`, transformOrigin: "center" }}
-              >
-                <path
-                  d="M 10 75 Q 20 55 25 35 Q 35 25 50 42 Q 60 50 70 52 Q 78 60 85 72"
-                  fill="none"
-                  stroke="#0A3D3A"
-                  strokeWidth="0.35"
-                  strokeDasharray="1.2,1.2"
-                  opacity="0.65"
-                />
-              </svg>
-            )}
-
-            {/* Traffic pills */}
+            {/* Fixed UI overlays — stay put while map zooms */}
             <div className="absolute left-2 sm:left-3 top-2 sm:top-3 flex flex-wrap gap-1.5 sm:gap-2 z-10 max-w-[70%]">
               <span className="inline-flex items-center gap-1.5 bg-white rounded-full border border-[#E0E0E0] px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs text-[#505050] shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#37E49E]" />
@@ -267,23 +305,25 @@ const EngineerRoutePlanner = () => {
               </span>
             </div>
 
-            {/* Zoom controls */}
             <div className="absolute right-2 sm:right-3 top-2 sm:top-3 flex flex-col gap-1.5 sm:gap-2 z-10">
               {[
                 {
                   label: "Zoom in",
                   icon: Plus,
-                  onClick: () => setZoom((z) => Math.min(1.4, z + 0.1)),
+                  onClick: () => setZoom((z) => Math.min(1.4, +(z + 0.1).toFixed(1))),
                 },
                 {
                   label: "Zoom out",
                   icon: Minus,
-                  onClick: () => setZoom((z) => Math.max(0.8, z - 0.1)),
+                  onClick: () => setZoom((z) => Math.max(0.8, +(z - 0.1).toFixed(1))),
                 },
                 {
                   label: "Current location",
                   icon: Navigation,
-                  onClick: () => showSuccess("Centered on current location (demo)"),
+                  onClick: () => {
+                    setZoom(1);
+                    showSuccess("Centered on current location (demo)");
+                  },
                 },
                 {
                   label: "Map layers",
@@ -307,42 +347,6 @@ const EngineerRoutePlanner = () => {
                 </button>
               ))}
             </div>
-
-            {/* Start / End */}
-            <div className="absolute left-2 sm:left-3 bottom-[22%] z-10">
-              <div className="flex items-center gap-1 bg-white rounded-md px-2 py-1 shadow-sm border border-[#E0E0E0]">
-                <Play size={10} className="text-[#242424] fill-[#242424]" />
-                <span className="text-xs font-medium text-[#242424]">Start</span>
-              </div>
-              <div className="w-2 h-2 rounded-full bg-[#242424] mt-1 ml-1" />
-            </div>
-            <div className="absolute right-2 sm:right-3 bottom-[22%] z-10">
-              <div className="flex items-center gap-1 bg-white rounded-md px-2 py-1 shadow-sm border border-[#E0E0E0]">
-                <Flag size={10} className="text-[#242424]" />
-                <span className="text-xs font-medium text-[#242424]">End</span>
-              </div>
-              <div className="w-2 h-2 rounded-full bg-[#242424] mt-1 ml-1" />
-            </div>
-
-            {/* Job markers from filtered data */}
-            {filteredJobs.map((job, idx) => (
-              <div
-                key={job.id}
-                className={`absolute ${job.mapPos} z-10 max-w-[46vw] sm:max-w-none`}
-              >
-                <div className="bg-[#0A3D3A] text-white text-xs font-medium rounded-lg px-2.5 sm:px-3 py-2 shadow-lg">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold shrink-0">
-                      {idx + 1}
-                    </span>
-                    <span className="truncate">{job.shortTitle}</span>
-                  </div>
-                  <div className="text-[10px] text-white/70 font-normal mt-0.5 pl-7">
-                    {job.time}
-                  </div>
-                </div>
-              </div>
-            ))}
 
             {/* Route Summary — below map on mobile so it doesn't cover the route */}
             <div className="hidden xl:block absolute left-2 sm:left-3 bottom-2 sm:bottom-3 w-[min(220px,calc(100%-1rem))] bg-white rounded-xl border border-[#E0E0E0] p-3 sm:p-4 shadow-sm z-10">

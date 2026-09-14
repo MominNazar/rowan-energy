@@ -81,7 +81,7 @@ const CODE_BADGES: Record<string, string> = {
 };
 
 const selectTrigger =
-  "h-10 w-full min-w-0 border-[#D3D3D3] rounded-lg text-sm focus:ring-[#0A3D3A] focus:ring-offset-0 bg-white";
+  "h-10 w-full min-w-0 border-[#D3D3D3] rounded-lg text-sm text-left justify-between focus:ring-[#0A3D3A] focus:ring-offset-0 bg-white [&>span]:text-left [&>span]:flex-1 [&>span]:min-w-0 [&>span]:truncate";
 const outlineBtn =
   "h-10 w-full sm:w-auto px-3 sm:px-4 border-[#0A3D3A] text-[#0A3D3A] hover:bg-[#0A3D3A]/5 hover:text-[#0A3D3A] rounded-lg text-xs sm:text-sm font-semibold gap-2 bg-white";
 

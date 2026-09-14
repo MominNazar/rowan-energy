@@ -269,7 +269,7 @@ const CustomerBookings = () => {
     >
       {/* Filters Card */}
       <div className="bg-white rounded-xl border border-[#D3D3D3] p-3 sm:p-5 lg:p-6 mb-6 min-w-0 max-w-full">
-        <div className="flex flex-col lg:flex-row lg:items-center flex-wrap gap-4 min-w-0 max-w-full">
+        <div className="flex flex-col lg:flex-row lg:items-end flex-wrap gap-4 min-w-0 max-w-full">
           {/* Date Range */}
           <div className="flex-1 min-w-0 max-w-full xl:w-[480px]">
             <label className="block text-xs sm:text-sm font-semibold text-[#242424] mb-2">
